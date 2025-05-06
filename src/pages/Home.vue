@@ -3,9 +3,13 @@
         rel="stylesheet" />
     <main>
         <ExchangeRate />
+        <HalluForYou />
+        <International />
     </main>
 </template>
 
 <script setup lang="ts">
 import ExchangeRate from "../components/ExchangeRate.vue";
+import HalluForYou from "../components/HalluForYou.vue";
+import International from "../components/International.vue";
 </script>

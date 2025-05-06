@@ -1,10 +1,10 @@
 <template>
   <section class="rate-section">
-    <h2 class="rate-title">Tỷ giá đảm bảo trong 2h</h2>
+    <div class="rate-title">Tỷ giá đảm bảo trong 2h</div>
     <div class="rate-display">
-      <span class="rate-value">1 USD = 25,822.60 VND</span>
+      <span class="rate-value">1 {{ suggestionCurrency }} = {{ suggestionCurrencyValue }} VND</span>
       <img
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/12fca97a141ac7fd63301fd3d045da9faf51adff?placeholderIfAbsent=true&apiKey=ffc8e6a5cacb4bf8968526b09617ce7d"
+        :src="lockedIcon"
         class="info-icon"
         alt="Information"
       />
@@ -12,10 +12,25 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: "ExchangeRateDisplay",
-};
+<script setup>
+import lockedIcon from "@/assets/icons/locked.png";
+
+defineProps({
+  suggestionCurrency: {
+    type: String,
+    default: "",
+  },
+  suggestionCurrencyValue: {
+    type: Number,
+    default: 0,
+  },
+});
+
+const lockedIconPath = lockedIcon;
+
+defineExpose({
+  lockedIconPath,
+});
 </script>
 
 <style scoped>
@@ -28,9 +43,12 @@ export default {
 }
 
 .rate-title {
-  color: #23262f;
+  color: var(--Neutrals-2, #23262F);
+  font-family: Inter, sans-serif;
   font-size: 16px;
+  font-style: normal;
   font-weight: 600;
+  line-height: 24px;
 }
 
 .rate-display {
@@ -41,7 +59,7 @@ export default {
   display: flex;
   margin-top: 4px;
   min-height: 76px;
-  padding: 24px 16px;
+  padding: 0px 16px;
   gap: 10px;
   font-size: 20px;
   color: #163300;

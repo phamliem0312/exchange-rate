@@ -29,7 +29,7 @@ import logo from '@/assets/images/logo.png';
 .header {
   display: flex;
   align-items: center;
-  padding: 12px 160px;
+  padding: 12px 5%;
 }
 
 .logo {
@@ -92,7 +92,6 @@ import logo from '@/assets/images/logo.png';
 .auth-buttons {
   display: flex;
   margin-left: auto;
-  width: 336px;
   align-items: flex-start;
   gap: 8px;
   align-self: stretch;

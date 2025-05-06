@@ -5,7 +5,7 @@
         Tỷ giá <span>tốt nhất</span> trong tầm tay
       </div>
       <div class="exchange-rate-description">
-        <img src="@/assets/images/banner_bg.png" alt="">
+        <img :src="banner_bg" alt="">
       </div>
     </div>
     <div class="exchange-rate-form">
@@ -15,18 +15,19 @@
 </template>
 
 <script setup lang="ts">
-import CurrencyExchangeForm from "./CurrencyExchangeForm.vue";
+import banner_bg from "@/assets/images/banner_bg.png";
+import CurrencyExchangeForm from "./ExchangeRate/CurrencyExchangeForm.vue";
 </script>
 
 <style scoped>
 .exchange-rate-main {
   display: flex;
-  align-items: center;
   width: 100%;
+  padding-top: 56px;
 }
 
 .exchange-rate-content {
-  width: 66%;
+  width: calc(95% - 565px);
 }
 
 .exchange-rate-title {
@@ -37,7 +38,7 @@ import CurrencyExchangeForm from "./CurrencyExchangeForm.vue";
   font-style: normal;
   font-weight: 600;
   line-height: 80px;
-  padding: 56px 160px;
+  padding: 0px 140px;
 }
 
 .exchange-rate-title span {
@@ -59,7 +60,7 @@ import CurrencyExchangeForm from "./CurrencyExchangeForm.vue";
 
 
 .exchange-rate-form {
-  width: 33%;
+  width: 565px;
   display: flex;
 }
 </style>
