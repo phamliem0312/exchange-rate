@@ -1,7 +1,4 @@
 <template>
-  <div class="field-header">
-    <label class="field-label">{{ label }}</label>
-  </div>
   <div class="dropdown">
     <div class="dropdown-toggle">
       <div class="currency-selector" @click.stop="toggleDropdown">
@@ -40,10 +37,6 @@ const props = defineProps({
   currency: {
     type: String,
     required: true
-  },
-  label: {
-    type: String,
-    default: ''
   },
   value: {
     type: Number,
@@ -109,22 +102,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.field-header {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  gap: 8px;
-  font-size: 16px;
-  color: #161733;
-  padding: 4px 0px;
-}
-
-.field-label {
-  color: #161733;
-  align-self: stretch;
-  margin: auto 0;
-}
-
 .dropdown {
   width: 100%;
   position: relative;

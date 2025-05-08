@@ -52,7 +52,7 @@
   <style scoped>
   .international-transfer {
     background: white;
-    padding: 20px;
+    padding: 20px 0px;
     font-family: sans-serif;
   }
   
@@ -75,10 +75,12 @@
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    margin: 0px 5%;
   }
   
   .left-side {
     background-color: #f0f0f0;
+    width: 50%;
   }
   
   .photo {
@@ -89,6 +91,7 @@
   }
   
   .right-side {
+    width: 50%;
     background: linear-gradient(135deg, #166534, #047857);
     color: white;
     padding: 64px;

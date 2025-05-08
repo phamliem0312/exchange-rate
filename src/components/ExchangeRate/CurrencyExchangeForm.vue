@@ -4,14 +4,20 @@
       :suggestionCurrencyValue="suggestionCurrencyValue" />
 
     <div class="exchange-form">
-      <CurrencyInput v-model:currency="sourceCurrency" label="Số tiền cần chuyển" v-model:value="sourceValue" />
+      <div class="field-header">
+        <label class="field-label">Số tiền cần chuyển</label>
+      </div>
+      <CurrencyInput v-model:currency="sourceCurrency" v-model:value="sourceValue" />
 
       <div class="divider">
         <div class="timeline-line"></div>
         <img :src="exchangeIcon" class="divider-image" alt="" />
       </div>
-
-      <CurrencyInput v-model:currency="targetCurrency" label="Số tiền nhận về" v-model:value="targetValue" />
+  
+      <div class="field-header">
+        <label class="field-label">Số tiền nhận về</label>
+      </div>
+      <CurrencyInput v-model:currency="targetCurrency" v-model:value="targetValue" />
     </div>
     <TransferPurpose />
     <div class="buttons-container">
@@ -54,6 +60,21 @@ watch(
 </script>
 
 <style scoped>
+.field-header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #161733;
+  padding: 4px 0px;
+}
+
+.field-label {
+  color: #161733;
+  align-self: stretch;
+  margin: auto 0;
+}
 .exchange-container {
   border-radius: 24px;
   box-shadow: 0px 40px 32px -24px rgba(15, 15, 15, 0.12);

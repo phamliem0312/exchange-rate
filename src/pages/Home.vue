@@ -5,6 +5,11 @@
         <ExchangeRate />
         <HalluForYou />
         <International />
+        <FeeComparison />
+        <CustomerReview />
+        <DownloadNow />
+        <Register />
+        <Footer />
     </main>
 </template>
 
@@ -12,4 +17,9 @@
 import ExchangeRate from "../components/ExchangeRate.vue";
 import HalluForYou from "../components/HalluForYou.vue";
 import International from "../components/International.vue";
+import FeeComparison from "../components/FeeComparison.vue";
+import CustomerReview from "../components/CustomerReview.vue";
+import DownloadNow from "../components/DownloadNow.vue";
+import Register from "../components/Register.vue";
+import Footer from "../components/Footer.vue";
 </script>

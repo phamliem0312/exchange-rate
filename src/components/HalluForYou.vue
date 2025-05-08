@@ -51,7 +51,7 @@
   <style scoped>
   .features-section {
     background: #f9fafb;
-    padding: 40px 20px;
+    padding: 40px 5%;
     text-align: center;
   }
   
@@ -69,7 +69,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
-    max-width: 1200px;
     margin: 0 auto;
   }
   
