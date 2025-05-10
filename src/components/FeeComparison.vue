@@ -43,6 +43,25 @@
             </table>
 
             <div class="chart-container">
+                <div class="exchange-container">
+                    <div class="chart-title">
+                        <div class="title">Biểu đồ USD sang VND</div>
+                        <div class="percentage-change">↑ +12.49%</div>
+                    </div>
+                    <div class="timestamp">
+                        Ngày 18 tháng 4 năm 2025, 10:06 UTC
+                    </div>
+                </div>
+                <div class="time-selector">
+                    <button
+                    v-for="(label, index) in timeRanges"
+                    :key="index"
+                    :class="['time-button', { active: selected === label }]"
+                    @click="selected = label"
+                    >
+                    {{ label }}
+                    </button>
+                </div>
                 <img :src="chartImage" alt="chart" class="chart-image" />
             </div>
         </div>
@@ -109,7 +128,8 @@ const banks = ref([
         received: 25_595_278,
         logo: techcombankLogo,
     },
-]);
+]);const timeRanges = ['12 giờ', '1 ngày', '1 tuần', '1 tháng', '1 năm', '2 năm', '5 năm', '10 năm']
+const selected = ref('12 giờ')
 
 const formatCurrency = (value) => {
     return new Intl.NumberFormat('en-US', {
@@ -247,5 +267,92 @@ input[type="number"] {
 .chart-container img {
     width: 100%;
     height: auto;
+}
+
+.exchange-container {
+  font-family: 'Segoe UI', sans-serif;
+  color: #0f1020;
+  padding: 20px 0px;
+  display: flex;
+}
+
+.title-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.currency {
+  margin-left: 5px;
+}
+
+.percentage-change {
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: right;
+    background-color: #EFF9F0;
+    padding: 4px 12px;
+    border-radius: 16px;
+    color: #14AF23;
+}
+
+.timestamp {
+  margin-top: 8px;
+  color: #3f3f56;
+  font-size: 14px;
+  text-align: right;
+  flex: 1;
+}
+
+.chart-title .title{
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+}
+
+.chart-title{
+    align-items: center;
+    display: flex;
+    gap: 12px;
+}
+
+.time-selector {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  justify-content: center;
+}
+
+.time-button {
+  border: 1px solid #d9dbe9;
+  background-color: white;
+  color: #6c6f85;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: Inter, sans-serif;
+  line-height: 20px;
+  letter-spacing: 0%;
+}
+
+.time-button.active {
+  background-color: #9ee77c;
+  color: black;
+  border: none;
+}
+
+.time-button:hover {
+  opacity: 0.85;
 }
 </style>
