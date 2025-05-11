@@ -1,18 +1,46 @@
-export async function fetchExchangeRate(amount, sourceCurrencyCode, targetCurrencyCode) {
-    return {
-        data: {
-            rate: 1.2,
-            amount: 1.2 * amount,
+async function fetchData(endpoint, $data, $method = 'GET') {
+    let url = '/exchange-rate-web/site/api/v1/' + endpoint;
+    const options = {
+        method: $method,
+        headers: {
+            'Content-Type': 'application/json',
         },
-        status: 200,
-        success: true,
+    };
+
+    if ($method === 'GET' && $data) {
+        const queryString = new URLSearchParams($data).toString();
+        url += '?' + queryString;
     }
-  
-    const apiUrl = `https://api.example.com/exchange-rate?source=${sourceCurrencyCode}&target=${targetCurrencyCode}&amount=${amount}`;
-    const response = await fetch(apiUrl);
+
+    if ($method === 'POST' || $method === 'PUT') {
+        options.body = JSON.stringify($data);
+    }
+
+    const response = await fetch(url, options);
+    
     if (!response.ok) {
       throw new Error(`API error: ${response.statusText}`);
     }
-  
+
     return await response.json();
+
+}
+
+export async function convertAmount(fromCurrency, amount, bankCode) {
+    const endpoint = 'ExchangeRate/convertExchangeRate';
+    const data = {
+        fromCurrency: fromCurrency,
+        bankCode: bankCode,
+        amount: amount,
+    }
+    return await fetchData(endpoint, data);
+}
+
+export async function getBestExchangeRate(fromCurrency, toCurrency) {
+    const endpoint = 'ExchangeRate/bestExchangeRate';
+    const data = {
+        fromCurrency: fromCurrency,
+        toCurrency: toCurrency,
+    }
+    return await fetchData(endpoint, data);
 }

@@ -8,5 +8,14 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src')
     }
-  }
+  },
+  server: {
+    proxy: {
+      '/exchange-rate-web': {
+        target: 'http://localhost',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/exchange-rate-web/, '/exchange-rate-web'),
+      },
+    },
+  },
 })

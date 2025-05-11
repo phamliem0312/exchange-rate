@@ -9,11 +9,12 @@
         <img :src="arrowDownIcon" alt="">
       </div>
       <input
-        type="number"
-        :value="value"
+        type="text"
+        :value="formatNumber(value)"
         class="amount-input"
         inputmode="numeric"
         @input="updateValue($event.target.value)"
+        :disabled="isDisabled"
       />
     </div>
 
@@ -32,6 +33,8 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import arrowDownIcon from "@/assets/icons/arrow-down.png";
+import { formatNumber, parseFormattedNumber } from "@/utils/number";
+import { getCurrencyList } from '@/services/config';
 
 const props = defineProps({
   currency: {
@@ -46,18 +49,21 @@ const props = defineProps({
 
 const emit = defineEmits(['update:currency', 'update:value']);
 
-const currencies = ref([
-  { code: 'VND', name: 'Vietnam', flag: 'https://flagcdn.com/vn.svg' },
-  { code: 'USD', name: 'United States of America', flag: 'https://flagcdn.com/us.svg' },
-  { code: 'THB', name: 'Thailand', flag: 'https://flagcdn.com/th.svg' },
-  { code: 'EUR', name: 'European Union', flag: 'https://flagcdn.com/eu.svg' },
-  { code: 'HKD', name: 'Hong Kong', flag: 'https://flagcdn.com/hk.svg' },
-  { code: 'GBP', name: 'United Kingdom', flag: 'https://flagcdn.com/gb.svg' },
-  { code: 'JPY', name: 'Japan', flag: 'https://flagcdn.com/jp.svg' },
-  { code: 'KRW', name: 'Korea', flag: 'https://flagcdn.com/kr.svg' },
-])
+const isDisabled = computed(() => {
+  return props.currency === 'VND';
+});
 
-const selected = ref(currencies.value.filter(c => c.code === props.currency)[0]);
+const currencies = computed(() => {
+  return getCurrencyList(props.currency === 'VND' ? 'VND' : 'all');
+});
+
+const selected = computed(() => {
+  if (props.currency === 'VND') {
+    return getCurrencyList('VND')[0];
+  }
+  return getCurrencyList().filter(c => c.code === props.currency)[0];
+});
+
 const showList = ref(false);
 const search = ref("");
 
@@ -69,7 +75,9 @@ const filteredCurrencies = computed(() =>
 )
 
 function toggleDropdown() {
-  showList.value = !showList.value;
+  if (!props.isDisabled) {
+    showList.value = !showList.value;
+  }
 }
 
 function selectCurrency(currency) {
@@ -78,7 +86,8 @@ function selectCurrency(currency) {
   emit('update:currency', currency.code);
 }
 
-function updateValue(value) {
+function updateValue(valueStr) {
+  let value = parseFormattedNumber(valueStr);
   if (isNaN(value) || value === '') {
     value = 0;
   }

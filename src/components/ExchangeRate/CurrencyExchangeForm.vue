@@ -1,7 +1,7 @@
 <template>
   <div class="exchange-container">
-    <SuggestionExchangeRate :suggestionCurrency="suggestionCurrency"
-      :suggestionCurrencyValue="suggestionCurrencyValue" />
+    <SuggestionExchangeRate :suggestionFromCurrency="sourceCurrency" :suggestionCurrencyValue="suggestionCurrencyValue"
+      :suggestionToCurrency="targetCurrency" />
 
     <div class="exchange-form">
       <div class="field-header">
@@ -13,11 +13,11 @@
         <div class="timeline-line"></div>
         <img :src="exchangeIcon" class="divider-image" alt="" />
       </div>
-  
+
       <div class="field-header">
         <label class="field-label">Số tiền nhận về</label>
       </div>
-      <CurrencyInput v-model:currency="targetCurrency" v-model:value="targetValue" />
+      <CurrencyInput v-model:currency="targetCurrency" v-model:value="targetValue" :isDisabled="true" />
     </div>
     <TransferPurpose />
     <div class="buttons-container">
@@ -32,28 +32,46 @@ import SuggestionExchangeRate from "./SuggestionExchangeRate.vue";
 import CurrencyInput from "./CurrencyInput.vue";
 import exchangeIcon from "@/assets/icons/exchange.png";
 import TransferPurpose from "./TransferPurpose.vue";
-import { watch, ref } from "vue";
-import { fetchExchangeRate } from "@/services/api";
+import { watch, ref, computed } from "vue";
+import { getBestExchangeRate } from "@/services/api";
 
 const sourceCurrency = ref("USD");
 const targetCurrency = ref("VND");
 const sourceValue = ref(0);
-const targetValue = ref(0);
-const suggestionCurrency = ref("USD");
-const suggestionCurrencyValue = ref(23000);
+const suggestionCurrencyValue = ref(0);
+const suggestionBankCode = ref(null);
+
+const targetValue = computed(() => {
+  return sourceValue.value * suggestionCurrencyValue.value;
+});
+
+const setBestExchangeRate = async () => {
+  getBestExchangeRate(sourceCurrency.value, targetCurrency.value)
+    .then((response) => {
+      suggestionCurrencyValue.value = response.exchangeRate ?? 0;
+      suggestionBankCode.value = response.bankCode ?? null;
+    })
+    .catch((error) => {
+      suggestionCurrencyValue.value = 0;
+      suggestionBankCode.value = null;
+  
+      console.error("Error fetching exchange rate:", error);
+      alert("Không tìm thấy tỷ giá phù hợp");
+    });
+};
 
 watch(
-  sourceValue,
+  sourceCurrency,
   async () => {
-    const amount = sourceValue.value;
+    setBestExchangeRate();
+  },
+  { immediate: true }
+);
 
-    try {
-      const response = await fetchExchangeRate(amount, sourceCurrency.value, targetCurrency.value);
-
-      targetValue.value = response.data.amount;
-    } catch (error) {
-      console.error("Error fetching exchange rate:", error);
-    }
+watch(
+  targetCurrency,
+  async () => {
+    setBestExchangeRate();
   },
   { immediate: true }
 );
@@ -75,6 +93,7 @@ watch(
   align-self: stretch;
   margin: auto 0;
 }
+
 .exchange-container {
   border-radius: 24px;
   box-shadow: 0px 40px 32px -24px rgba(15, 15, 15, 0.12);

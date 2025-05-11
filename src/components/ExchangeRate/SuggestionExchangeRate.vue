@@ -2,7 +2,7 @@
   <section class="rate-section">
     <div class="rate-title">Tỷ giá đảm bảo trong 2h</div>
     <div class="rate-display">
-      <span class="rate-value">1 {{ suggestionCurrency }} = {{ suggestionCurrencyValue }} VND</span>
+      <span class="rate-value">1 {{ suggestionFromCurrency }} = {{ suggestionCurrencyValue }} {{ suggestionToCurrency }}</span>
       <img
         :src="lockedIcon"
         class="info-icon"
@@ -16,13 +16,17 @@
 import lockedIcon from "@/assets/icons/locked.png";
 
 defineProps({
-  suggestionCurrency: {
+  suggestionFromCurrency: {
     type: String,
     default: "",
   },
   suggestionCurrencyValue: {
     type: Number,
     default: 0,
+  },
+  suggestionToCurrency: {
+    type: String,
+    default: "",
   },
 });
 
