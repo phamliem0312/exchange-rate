@@ -11,7 +11,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/exchange-rate-web': {
+      '/admin': {
         target: 'http://localhost',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/exchange-rate-web/, '/exchange-rate-web'),
