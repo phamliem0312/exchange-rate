@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/admin': {
-        target: 'http://localhost',
+        target: 'http://localhost/admin',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/admin/, '/admin'),
       },
