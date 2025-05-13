@@ -1,5 +1,5 @@
 async function fetchData(endpoint, $data, $method = 'GET') {
-    let url = '/exchange-rate-web/site/api/v1/' + endpoint;
+    let url = '/api/v1/' + endpoint;
     const options = {
         method: $method,
         headers: {

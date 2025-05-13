@@ -14,7 +14,7 @@ export default defineConfig({
       '/admin': {
         target: 'http://localhost',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/exchange-rate-web/, '/exchange-rate-web'),
+        rewrite: (path) => path.replace(/^\/admin/, '/admin'),
       },
     },
   },
