@@ -21,8 +21,8 @@
     </div>
     <TransferPurpose />
     <div class="buttons-container">
-      <button class="transfer-button">Chuyển tiền</button>
-      <button class="compare-button">So sánh phí</button>
+      <button class="transfer-button" @click="transfer()">Chuyển tiền</button>
+      <button class="compare-button" @click="scrollToTarget()">So sánh phí</button>
     </div>
   </div>
 </template>
@@ -60,16 +60,19 @@ const setBestExchangeRate = async () => {
     });
 };
 
-watch(
-  sourceCurrency,
-  async () => {
-    setBestExchangeRate();
-  },
-  { immediate: true }
-);
+const scrollToTarget = () => {
+  const element = document.querySelector('.fee-comparison')
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' })
+  }
+}
+
+const transfer = () => {
+  alert("Tính năng đang được phát triển");
+};
 
 watch(
-  targetCurrency,
+  sourceCurrency,
   async () => {
     setBestExchangeRate();
   },

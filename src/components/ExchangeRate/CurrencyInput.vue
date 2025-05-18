@@ -81,7 +81,6 @@ function toggleDropdown() {
 }
 
 function selectCurrency(currency) {
-  selected.value = currency;
   showList.value = false;
   emit('update:currency', currency.code);
 }
@@ -169,7 +168,7 @@ onBeforeUnmount(() => {
 }
 
 .amount-input {
-  color: #b1b5c3;
+  color: #163300;
   text-align: right;
   flex: 1;
   border: none;

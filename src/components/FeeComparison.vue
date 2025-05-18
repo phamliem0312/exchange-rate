@@ -1,7 +1,6 @@
 <template>
     <div class="fee-comparison">
         <div class="comparison-label">So sánh phí</div>
-
         <img :src="mainPicTop" alt="corner decoration" class="top-right-decoration" />
         <div class="transfer-box-main">
             <div class="transfer-box">
@@ -27,13 +26,13 @@
                 <tbody>
                     <tr v-for="bank in banks" :key="bank.name">
                         <td>
-                            <img :src="bank.logo" alt="logo" class="bank-logo" />
+                            <img v-if="bank.logo" :src="bank.logo" alt="logo" class="bank-logo" />
                             {{ bank.name }}
                         </td>
-                        <td>{{ formatCurrency(bank.rate) }}</td>
-                        <td>{{ bank.fee }} USD</td>
+                        <td>{{ formatNumber(bank.rate) }}</td>
+                        <td>{{ bank.fee }} VND</td>
                         <td>
-                            {{ formatCurrency(bank.received) }} VND
+                            {{ formatNumber(bank.received) }} VND
                         </td>
                         <td>
                             <button v-if="bank.best" class="transfer-btn">Chuyển tiền</button>
@@ -53,13 +52,9 @@
                     </div>
                 </div>
                 <div class="time-selector">
-                    <button
-                    v-for="(label, index) in timeRanges"
-                    :key="index"
-                    :class="['time-button', { active: selected === label }]"
-                    @click="selected = label"
-                    >
-                    {{ label }}
+                    <button v-for="(label, index) in timeRanges" :key="index"
+                        :class="['time-button', { active: selected === label }]" @click="selected = label">
+                        {{ label }}
                     </button>
                 </div>
                 <img :src="chartImage" alt="chart" class="chart-image" />
@@ -69,7 +64,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, computed } from 'vue';
+import { getBestExchangeRate, getExchangeRateList } from "@/services/api";
+import { formatNumber } from "@/utils/number";
 import CurrencyInput from "./ExchangeRate/CurrencyInput.vue";
 import mainPicTop from "@/assets/images/main-pic-1.png";
 import mbbankLogo from '@/assets/icons/mbbank.png';
@@ -82,66 +79,66 @@ import chartImage from '@/assets/images/chart.png';
 
 const fromCurrency = ref('USD');
 const toCurrency = ref('VND');
-const toValue = ref(0);
 const fromValue = ref(0);
-const banks = ref([
-    {
-        name: 'MBBank',
-        rate: 25_533.3,
-        fee: 1.25,
-        received: 25_595_278,
-        best: true,
-        logo: mbbankLogo,
-    },
-    {
-        name: 'TPBank',
-        rate: 25_533.3,
-        fee: 1.25,
-        received: 25_595_278,
-        logo: tpbankLogo,
-    },
-    {
-        name: 'Agribank',
-        rate: 25_533.3,
-        fee: 1.25,
-        received: 25_595_278,
-        logo: agribankLogo,
-    },
-    {
-        name: 'VPBank',
-        rate: 25_533.3,
-        fee: 1.25,
-        received: 25_595_278,
-        logo: vpbankLogo,
-    },
-    {
-        name: 'Vietcombank',
-        rate: 25_533.3,
-        fee: 1.25,
-        received: 25_595_278,
-        logo: vietcombankLogo,
-    },
-    {
-        name: 'Techcombank',
-        rate: 25_533.3,
-        fee: 1.25,
-        received: 25_595_278,
-        logo: techcombankLogo,
-    },
-]);const timeRanges = ['12 giờ', '1 ngày', '1 tuần', '1 tháng', '1 năm', '2 năm', '5 năm', '10 năm']
-const selected = ref('12 giờ')
+const suggestionCurrencyValue = ref(0);
+const toValue = computed(() => {
+    return fromValue.value * suggestionCurrencyValue.value;
+});
+const banks = ref([]);
 
-const formatCurrency = (value) => {
-    return new Intl.NumberFormat('en-US', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2,
-    }).format(value);
+const logoMap = {
+    'MBbank': mbbankLogo,
+    'TPbank': tpbankLogo,
+    'Agribank': agribankLogo,
+    'VPbank': vpbankLogo,
+    'Vietcombank': vietcombankLogo,
+    'Techcombank': techcombankLogo
 };
+
+const timeRanges = ['12 giờ', '1 ngày', '1 tuần', '1 tháng', '1 năm', '2 năm', '5 năm', '10 năm']
+const selected = ref('12 giờ');
+
+const setBestExchangeRate = async () => {
+    getBestExchangeRate(fromCurrency.value, toCurrency.value)
+        .then((response) => {
+            suggestionCurrencyValue.value = response.exchangeRate ?? 0;
+        })
+        .catch((error) => {
+            suggestionCurrencyValue.value = 0;
+
+            console.error("Error fetching exchange rate:", error);
+            alert("Không tìm thấy tỷ giá phù hợp");
+        });
+};
+
+const setExchangeRateList = () => {
+    getExchangeRateList(fromCurrency.value)
+        .then((response) => {
+            banks.value = response.list.map((bank, index) => ({
+                ...bank,
+                logo: logoMap[bank.name] ?? null, // Use the logoMap to get the logo
+                best: index == 0,
+            }));
+        })
+        .catch((error) => {
+            console.error("Error fetching exchange rate list:", error);
+        });
+};
+
+watch(
+    fromCurrency,
+    async () => {
+        setBestExchangeRate();
+        setExchangeRateList();
+    },
+    { immediate: true }
+);
+
 </script>
 
 <style scoped>
 .fee-comparison {
-    background: #f4f6f8;
+    background: #ededed;
     padding: 40px 5% 60px 5%;
     font-family: Arial, sans-serif;
     position: relative;
@@ -270,26 +267,26 @@ input[type="number"] {
 }
 
 .exchange-container {
-  font-family: 'Segoe UI', sans-serif;
-  color: #0f1020;
-  padding: 20px 0px;
-  display: flex;
+    font-family: 'Segoe UI', sans-serif;
+    color: #0f1020;
+    padding: 20px 0px;
+    display: flex;
 }
 
 .title-section {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .title {
-  font-size: 24px;
-  font-weight: bold;
-  margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
 }
 
 .currency {
-  margin-left: 5px;
+    margin-left: 5px;
 }
 
 .percentage-change {
@@ -305,54 +302,54 @@ input[type="number"] {
 }
 
 .timestamp {
-  margin-top: 8px;
-  color: #3f3f56;
-  font-size: 14px;
-  text-align: right;
-  flex: 1;
+    margin-top: 8px;
+    color: #3f3f56;
+    font-size: 14px;
+    text-align: right;
+    flex: 1;
 }
 
-.chart-title .title{
+.chart-title .title {
     font-family: Inter, sans-serif;
     font-weight: 600;
     font-size: 32px;
 }
 
-.chart-title{
+.chart-title {
     align-items: center;
     display: flex;
     gap: 12px;
 }
 
 .time-selector {
-  display: flex;
-  gap: 12px;
-  padding: 20px;
-  justify-content: center;
+    display: flex;
+    gap: 12px;
+    padding: 20px;
+    justify-content: center;
 }
 
 .time-button {
-  border: 1px solid #d9dbe9;
-  background-color: white;
-  color: #6c6f85;
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-weight: 500;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: Inter, sans-serif;
-  line-height: 20px;
-  letter-spacing: 0%;
+    border: 1px solid #d9dbe9;
+    background-color: white;
+    color: #6c6f85;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: Inter, sans-serif;
+    line-height: 20px;
+    letter-spacing: 0%;
 }
 
 .time-button.active {
-  background-color: #9ee77c;
-  color: black;
-  border: none;
+    background-color: #9ee77c;
+    color: black;
+    border: none;
 }
 
 .time-button:hover {
-  opacity: 0.85;
+    opacity: 0.85;
 }
 </style>
