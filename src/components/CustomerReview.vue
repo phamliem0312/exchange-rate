@@ -199,7 +199,7 @@ h2 {
 
 .store-rating {
     display: flex;
-    background: #F4F5F6;
+    background: #ededed;
     margin-top: 2rem;
     align-items: center;
     justify-content: space-around;

@@ -21,6 +21,21 @@
             </div>
         </div>
     </div>
+    <div v-if="selectedPurpose" class="fee-box">
+        <div class="fee-row">
+            <span class="label">Phí tài khoản ngân hàng được kết nối (VCB)</span>
+            <span class="amount">1.70 USD</span>
+        </div>
+        <div class="fee-row">
+            <span class="label">Phí của chúng tôi</span>
+            <span class="amount">1.70 USD</span>
+        </div>
+        <hr />
+        <div class="fee-total">
+            <span><strong>Tổng phí</strong> (0.89%)</span>
+            <span class="total-amount"><strong>8.88 USD</strong></span>
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -179,5 +194,51 @@ onBeforeUnmount(() => {
 
 .arrow {
     margin-left: 10px;
+}
+
+.fee-box {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    font-family: Inter, sans-serif;
+    background-color: #fff;
+}
+
+.fee-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.fee-row .label {
+    color: #23262F;
+    line-height: 20px;
+}
+
+.amount {
+    font-weight: bold;
+    color: #23262F;
+    line-height: 20px;
+    font-size: 16px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 12px 0;
+}
+
+.fee-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    color: #000;
+}
+
+.total-amount {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 26px;
 }
 </style>

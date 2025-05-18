@@ -44,3 +44,11 @@ export async function getBestExchangeRate(fromCurrency, toCurrency) {
     }
     return await fetchData(endpoint, data);
 }
+
+export async function getExchangeRateList(fromCurrency) {
+    const endpoint = 'ExchangeRate/exchangeRateList';
+    const data = {
+        fromCurrency: fromCurrency
+    }
+    return await fetchData(endpoint, data);
+}
