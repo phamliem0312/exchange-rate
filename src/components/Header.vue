@@ -48,8 +48,8 @@
             </label>
             <textarea v-model="form.message" placeholder="Nhập nội dung" required></textarea>
           </div>
-          <div class="form-row">
-            <button type="submit" class="submit-btn" style="text-align: center;">Gửi thông tin →</button>
+          <div class="form-row" style="text-align: center;">
+            <button type="submit" class="submit-btn">Gửi thông tin →</button>
           </div>
         </form>
       </div>
