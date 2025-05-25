@@ -16,15 +16,15 @@
             <table class="comparison-table">
                 <thead>
                     <tr>
-                        <th>Ngân hàng</th>
-                        <th>Tỷ giá</th>
-                        <th>Phí chuyển nhượng</th>
-                        <th>Người nhận được</th>
-                        <th></th>
+                        <th style="width: 25%;">Ngân hàng</th>
+                        <th style="width: 20%;">Tỷ giá</th>
+                        <th style="width: 20%;">Phí chuyển nhượng</th>
+                        <th style="width: 20%;">Người nhận được</th>
+                        <th style="width: 15%;"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="bank in banks" :key="bank.name">
+                    <tr v-for="(bank, index) in banks" :key="bank.name" @click="selectBank(bank, index)" class="bank-row">
                         <td>
                             <img v-if="bank.logo" :src="bank.logo" alt="logo" class="bank-logo" />
                             {{ bank.name }}
@@ -35,7 +35,7 @@
                             {{ formatNumber(bank.received) }} VND
                         </td>
                         <td>
-                            <button v-if="bank.best" class="transfer-btn">Chuyển tiền</button>
+                            <button v-if="selectedRow === index" class="transfer-btn">Chuyển tiền</button>
                         </td>
                     </tr>
                 </tbody>
@@ -75,6 +75,14 @@ import agribankLogo from '@/assets/icons/agribank.png';
 import vpbankLogo from '@/assets/icons/vpbank.png';
 import vietcombankLogo from '@/assets/icons/vietcombank.png';
 import techcombankLogo from '@/assets/icons/techcombank.png';
+import acb from '@/assets/icons/acb.png';
+import kienlongbank from '@/assets/icons/kienlongbank.png';
+import ncb from '@/assets/icons/ncb.png';
+import publicbank from '@/assets/icons/publicbank.png';
+import pvcombank from '@/assets/icons/pvcombank.png';
+import scb from '@/assets/icons/scb.png';
+import vietabank from '@/assets/icons/vietabank.png';
+import vietbank from '@/assets/icons/vietbank.png';
 import chartImage from '@/assets/images/chart.png';
 
 const fromCurrency = ref('USD');
@@ -92,16 +100,26 @@ const logoMap = {
     'Agribank': agribankLogo,
     'VPbank': vpbankLogo,
     'Vietcombank': vietcombankLogo,
-    'Techcombank': techcombankLogo
+    'Techcombank': techcombankLogo,
+    'ACB': acb,
+    'Kienlongbank': kienlongbank,
+    'NCB': ncb,
+    'PublicBank': publicbank,
+    'PVCombank': pvcombank,
+    'SCB': scb,
+    'VietAbank': vietabank,
+    'Vietbank': vietbank,
 };
 
 const timeRanges = ['12 giờ', '1 ngày', '1 tuần', '1 tháng', '1 năm', '2 năm', '5 năm', '10 năm']
 const selected = ref('12 giờ');
+const selectedRow = ref(0);
 
 const setBestExchangeRate = async () => {
     getBestExchangeRate(fromCurrency.value, toCurrency.value)
         .then((response) => {
             suggestionCurrencyValue.value = response.exchangeRate ?? 0;
+            selectedRow.value = 0;
         })
         .catch((error) => {
             suggestionCurrencyValue.value = 0;
@@ -116,13 +134,17 @@ const setExchangeRateList = () => {
         .then((response) => {
             banks.value = response.list.map((bank, index) => ({
                 ...bank,
-                logo: logoMap[bank.name] ?? null, // Use the logoMap to get the logo
-                best: index == 0,
+                logo: logoMap[bank.name] ?? null,
             }));
         })
         .catch((error) => {
             console.error("Error fetching exchange rate list:", error);
         });
+};
+
+const selectBank = (bank, index) => {
+    suggestionCurrencyValue.value = bank.rate;
+    selectedRow.value = index;
 };
 
 watch(
@@ -351,5 +373,9 @@ input[type="number"] {
 
 .time-button:hover {
     opacity: 0.85;
+}
+
+.bank-row:hover {
+    background-color: #d7d7d7;
 }
 </style>

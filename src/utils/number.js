@@ -1,12 +1,10 @@
-export function formatNumber(number) {
-    if (isNaN(number)) {
-        return '';
-    }
+export function formatNumber(n) {
+    const hasDecimal = n % 1 !== 0;
 
     return new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(number);
+      minimumFractionDigits: hasDecimal ? 2 : 0,
+      maximumFractionDigits: 2
+    }).format(n);
 }
 
 export function parseFormattedNumber(str) {

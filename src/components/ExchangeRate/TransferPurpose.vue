@@ -137,6 +137,7 @@ onBeforeUnmount(() => {
     z-index: 1000;
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .search-input {

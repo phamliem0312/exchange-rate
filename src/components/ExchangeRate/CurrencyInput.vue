@@ -192,6 +192,7 @@ onBeforeUnmount(() => {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   z-index: 10;
+  overflow-x: hidden;
 }
 
 .dropdown-list input {
