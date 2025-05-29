@@ -9,7 +9,7 @@
                 </div>
                 <button class="swap-button">⇄</button>
                 <div class="currency-box">
-                    <CurrencyInput v-model:currency="toCurrency" v-model:value="toValue" />
+                    <CurrencyInput v-model:currency="toCurrency" v-model:value="toValue" :isDisabled="true"/>
                 </div>
             </div>
 
@@ -29,19 +29,19 @@
                             <img v-if="bank.logo" :src="bank.logo" alt="logo" class="bank-logo" />
                             {{ bank.name }}
                         </td>
-                        <td>{{ formatNumber(bank.rate) }}</td>
-                        <td>{{ bank.fee }} VND</td>
-                        <td>
-                            {{ formatNumber(bank.received) }} VND
+                        <td style="text-align: center;">{{ formatNumber(bank.rate) }}</td>
+                        <td style="text-align: center;">{{ bank.fee }}</td>
+                        <td style="text-align: center;">
+                            {{ formatNumber(bank.received) }}
                         </td>
                         <td>
-                            <button v-if="selectedRow === index" class="transfer-btn">Chuyển tiền</button>
+                            <button v-if="selectedRow === index" class="transfer-btn" @click="transferAction()">Chuyển tiền</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-
-            <div class="chart-container">
+            <div v-if="showMore" class="show-more" @click="showMoreAction()">Xem thêm</div>
+            <!-- <div class="chart-container">
                 <div class="exchange-container">
                     <div class="chart-title">
                         <div class="title">Biểu đồ USD sang VND</div>
@@ -58,7 +58,45 @@
                     </button>
                 </div>
                 <img :src="chartImage" alt="chart" class="chart-image" />
+            </div> -->
+        </div>
+        <div v-if="showPopup" class="overlay">
+        <div class="popup">
+            <div class="contact-title">
+            Liên hệ ngay
+            <button class="close-btn" @click="showPopup = false">×</button>
             </div>
+
+            <form @submit.prevent="submitForm">
+            <div class="form-row">
+                <label>
+                Họ và tên <span class="required">*</span>
+                </label>
+                <input type="text" v-model="form.name" placeholder="Nhập họ và tên" required />
+            </div>
+            <div class="form-row">
+                <label>
+                Số điện thoại <span class="required">*</span>
+                </label>
+                <input type="tel" v-model="form.phone" placeholder="Nhập số điện thoại" required />
+            </div>
+            <div class="form-row">
+                <label>
+                Email <span class="required">*</span>
+                </label>
+                <input type="email" v-model="form.email" placeholder="Nhập email" required />
+            </div>
+            <div class="form-row">
+                <label>
+                Nội dung <span class="required">*</span>
+                </label>
+                <textarea v-model="form.message" placeholder="Nhập nội dung" required></textarea>
+            </div>
+            <div class="form-row" style="text-align: center;">
+                <button type="submit" class="submit-btn">Gửi thông tin →</button>
+            </div>
+            </form>
+        </div>
         </div>
     </div>
 </template>
@@ -83,16 +121,17 @@ import pvcombank from '@/assets/icons/pvcombank.png';
 import scb from '@/assets/icons/scb.png';
 import vietabank from '@/assets/icons/vietabank.png';
 import vietbank from '@/assets/icons/vietbank.png';
+import lpbank from '@/assets/icons/lpbank.png';
+import vietinbank from '@/assets/icons/vietinbank.png';
+import eximbank from '@/assets/icons/eximbank.png';
+import shb from '@/assets/icons/shb.png';
+import hsbc from '@/assets/icons/hsbc.png';
+import vietcapitalbank from '@/assets/icons/vietcapitalbank.png';
+import vrbank from '@/assets/icons/vrbank.png';
+import uob from '@/assets/icons/uob.jpg';
+import gpbank from '@/assets/icons/gpbank.png';
+import abbank from '@/assets/icons/abbank.webp';
 import chartImage from '@/assets/images/chart.png';
-
-const fromCurrency = ref('USD');
-const toCurrency = ref('VND');
-const fromValue = ref(0);
-const suggestionCurrencyValue = ref(0);
-const toValue = computed(() => {
-    return fromValue.value * suggestionCurrencyValue.value;
-});
-const banks = ref([]);
 
 const logoMap = {
     'MBbank': mbbankLogo,
@@ -109,16 +148,54 @@ const logoMap = {
     'SCB': scb,
     'VietAbank': vietabank,
     'Vietbank': vietbank,
+    'Vietinbank': vietinbank,
+    'Eximbank': eximbank,
+    'SHB': shb,
+    'HSBC': hsbc,
+    'Vietcapitalbank': vietcapitalbank,
+    'VRbank': vrbank,
+    'UOB': uob,
+    'LPbank': lpbank,
+    'GPbank': gpbank,
+    'ABbank': abbank,
 };
+
+const props = defineProps({
+  compareCurrency: {
+    type: String,
+    required: true
+  }
+});
+
+const fromCurrency = ref('VND');
+const toCurrency = ref('USD');
+const fromValue = ref(0);
+const suggestionCurrencyValue = ref(0);
+const banks = ref([]);
+const showMore = ref(true);
+const toValue = computed(() => {
+    if (suggestionCurrencyValue.value === 0) {
+        return 0;
+    }
+    return fromValue.value / suggestionCurrencyValue.value;
+});
 
 const timeRanges = ['12 giờ', '1 ngày', '1 tuần', '1 tháng', '1 năm', '2 năm', '5 năm', '10 năm']
 const selected = ref('12 giờ');
 const selectedRow = ref(0);
+const showPopup = ref(false);
+const limit = ref(5);
+const form = ref({
+  name: '',
+  phone: '',
+  email: '',
+  message: ''
+});
 
 const setBestExchangeRate = async () => {
-    getBestExchangeRate(fromCurrency.value, toCurrency.value)
+    getBestExchangeRate(toCurrency.value, fromCurrency.value)
         .then((response) => {
-            suggestionCurrencyValue.value = response.exchangeRate ?? 0;
+            suggestionCurrencyValue.value = response.exchangeRate ?? 1;
             selectedRow.value = 0;
         })
         .catch((error) => {
@@ -130,12 +207,20 @@ const setBestExchangeRate = async () => {
 };
 
 const setExchangeRateList = () => {
-    getExchangeRateList(fromCurrency.value)
+    getExchangeRateList(toCurrency.value, limit.value)
         .then((response) => {
-            banks.value = response.list.map((bank, index) => ({
-                ...bank,
-                logo: logoMap[bank.name] ?? null,
-            }));
+            banks.value = response.list.map((bank, index) => {
+                if (bank.rate > 0) {
+                    return {
+                        ...bank,
+                        logo: logoMap[bank.name] ?? null,
+                    }
+                }
+            });
+
+            if (response.list.length < limit.value) {
+                showMore.value = false;
+            }
         })
         .catch((error) => {
             console.error("Error fetching exchange rate list:", error);
@@ -147,8 +232,24 @@ const selectBank = (bank, index) => {
     selectedRow.value = index;
 };
 
+const transferAction = () => {
+    showPopup.value = true;
+};
+
+const showMoreAction = () => {
+    limit.value += 5;
+    setExchangeRateList();
+}
+
 watch(
-    fromCurrency,
+    () => props.compareCurrency,
+    (newValue) => {
+        toCurrency.value = newValue;
+    }
+);
+
+watch(
+    toCurrency,
     async () => {
         setBestExchangeRate();
         setExchangeRateList();
@@ -263,7 +364,7 @@ input[type="number"] {
     margin-left: 12px;
     background-color: #28a745;
     color: white;
-    padding: 0.25rem 0.5rem;
+    padding: 12px 24px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -377,5 +478,106 @@ input[type="number"] {
 
 .bank-row:hover {
     background-color: #d7d7d7;
+}
+
+.contact-title {
+  font-size: 40px;
+  line-height: 48px;
+  font-family: Inter, sans-serif;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  width: 600px;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  right: 16px;
+  background: transparent;
+  border-radius: 40px;
+  border: solid 1px #E6E8EC;
+  font-size: 32px;
+  cursor: pointer;
+  color: #E6E8EC;
+  width: 40px;
+  height: 40px;
+}
+h2 {
+  margin-bottom: 16px;
+  font-size: 24px;
+}
+
+.form-row {
+  margin-bottom: 16px;
+}
+
+form label {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  font-weight: bold;
+}
+
+input,
+textarea {
+  width: calc(100% - 24px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.required {
+  color: red;
+}
+
+.submit-btn {
+  margin-top: 12px;
+  background-color: #a3e635;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 15px;
+  color: #000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.show-more{
+    text-align: center;
+    padding: 8px 0px;
+    background-color: #047857;
+    color: #ffffff;
+    border-radius: 0px 0px 12px 12px;
+    cursor: pointer;
 }
 </style>

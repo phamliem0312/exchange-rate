@@ -45,10 +45,11 @@ export async function getBestExchangeRate(fromCurrency, toCurrency) {
     return await fetchData(endpoint, data);
 }
 
-export async function getExchangeRateList(fromCurrency) {
+export async function getExchangeRateList(fromCurrency, limit) {
     const endpoint = 'ExchangeRate/exchangeRateList';
     const data = {
-        fromCurrency: fromCurrency
+        fromCurrency: fromCurrency,
+        limit: limit
     }
     return await fetchData(endpoint, data);
 }

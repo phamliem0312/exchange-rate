@@ -6,7 +6,7 @@
     </div>
     <nav class="nav">
       <a href="#" class="nav-item active">Trang chủ</a>
-      <a href="#" class="nav-item">Hỗ trợ</a>
+      <a href="#" class="nav-item" @click="registerAction()">Hỗ trợ</a>
     </nav>
     <div class="auth-buttons">
       <button class="login-btn" @click="loginAction()">
@@ -199,17 +199,6 @@ function registerAction() {
   font-family: Inter, sans-serif;
   font-weight: bold;
   margin-bottom: 16px;
-}
-
-.open-btn {
-  padding: 10px 20px;
-  background-color: #22c55e;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 16px;
 }
 
 .overlay {

@@ -1,13 +1,12 @@
 <template>
   <section class="rate-section">
-    <div class="rate-title">Tỷ giá đảm bảo trong 2h</div>
-    <div class="rate-display">
-      <span class="rate-value">1 {{ suggestionFromCurrency }} = {{ formatNumber(suggestionCurrencyValue, 2) }} {{ suggestionToCurrency }}</span>
-      <img
+    <div class="rate-title"><img
         :src="lockedIcon"
         class="info-icon"
         alt="Information"
-      />
+      /> <span>Tỷ giá đảm bảo trong 2h</span></div>
+    <div class="rate-display">
+      <span class="rate-value">1 {{ suggestionFromCurrency }} = {{ formatNumber(suggestionCurrencyValue, 2) }} {{ suggestionToCurrency }}</span>
     </div>
   </section>
 </template>
@@ -54,23 +53,19 @@ defineExpose({
   font-style: normal;
   font-weight: 600;
   line-height: 24px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .rate-display {
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  border: 2px solid var(--Neutrals-6, #e6e8ec);
   display: flex;
-  margin-top: 4px;
-  min-height: 76px;
-  padding: 0px 16px;
-  gap: 10px;
+  padding: 16px 0px;
   font-size: 20px;
   color: #163300;
-  line-height: 1.4;
-  flex-wrap: wrap;
-  background-color: #f4f5f6;
+  text-align: center;
 }
 
 .rate-value {
@@ -81,12 +76,7 @@ defineExpose({
 }
 
 .info-icon {
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: center;
-  width: 24px;
-  align-self: stretch;
-  margin: auto 0;
+  width: 18px;
 }
 
 @media (max-width: 991px) {

@@ -1,14 +1,13 @@
 <template>
   <div class="exchange-container">
-    <SuggestionExchangeRate :suggestionFromCurrency="sourceCurrency" :suggestionCurrencyValue="suggestionCurrencyValue"
-      :suggestionToCurrency="targetCurrency" />
+    <SuggestionExchangeRate :suggestionFromCurrency="targetCurrency" :suggestionCurrencyValue="suggestionCurrencyValue"
+      :suggestionToCurrency="sourceCurrency" />
 
     <div class="exchange-form">
       <div class="field-header">
         <label class="field-label">Số tiền cần chuyển</label>
       </div>
       <CurrencyInput v-model:currency="sourceCurrency" v-model:value="sourceValue" />
-
       <div class="divider">
         <div class="timeline-line"></div>
         <img :src="exchangeIcon" class="divider-image" alt="" />
@@ -17,7 +16,7 @@
       <div class="field-header">
         <label class="field-label">Số tiền nhận về</label>
       </div>
-      <CurrencyInput v-model:currency="targetCurrency" v-model:value="targetValue" :isDisabled="true" />
+      <CurrencyInput v-model:currency="targetCurrency" v-model:value="targetValue" :isDisabled="true"/>
     </div>
     <TransferPurpose />
     <div class="buttons-container">
@@ -35,20 +34,32 @@ import TransferPurpose from "./TransferPurpose.vue";
 import { watch, ref, computed } from "vue";
 import { getBestExchangeRate } from "@/services/api";
 
-const sourceCurrency = ref("USD");
-const targetCurrency = ref("VND");
+const emit = defineEmits(['update:currency']);
+
+const props = defineProps({
+  currency: {
+    type: String,
+    required: true
+  }
+});
+
+const sourceCurrency = ref("VND");
+const targetCurrency = ref(props.currency);
 const sourceValue = ref(0);
-const suggestionCurrencyValue = ref(0);
+const suggestionCurrencyValue = ref(1);
 const suggestionBankCode = ref(null);
 
 const targetValue = computed(() => {
-  return sourceValue.value * suggestionCurrencyValue.value;
+  if (suggestionCurrencyValue.value === 0) {
+    return 0;
+  }
+  return sourceValue.value / suggestionCurrencyValue.value;
 });
 
 const setBestExchangeRate = async () => {
-  getBestExchangeRate(sourceCurrency.value, targetCurrency.value)
+  getBestExchangeRate(targetCurrency.value, sourceCurrency.value)
     .then((response) => {
-      suggestionCurrencyValue.value = response.exchangeRate ?? 0;
+      suggestionCurrencyValue.value = response.exchangeRate ?? 1;
       suggestionBankCode.value = response.bankCode ?? null;
     })
     .catch((error) => {
@@ -61,9 +72,9 @@ const setBestExchangeRate = async () => {
 };
 
 const scrollToTarget = () => {
-  const element = document.querySelector('.fee-comparison')
+  const element = document.querySelector('.fee-comparison');
   if (element) {
-    element.scrollIntoView({ behavior: 'smooth' })
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 }
 
@@ -72,9 +83,10 @@ const transfer = () => {
 };
 
 watch(
-  sourceCurrency,
+  targetCurrency,
   async () => {
     setBestExchangeRate();
+    emit('update:currency', targetCurrency.value);
   },
   { immediate: true }
 );
@@ -114,7 +126,7 @@ watch(
 }
 
 .exchange-form {
-  margin-top: 24px;
+  margin-top: 8px;
   width: 100%;
 }
 

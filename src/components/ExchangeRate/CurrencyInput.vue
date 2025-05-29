@@ -17,7 +17,6 @@
         :disabled="isDisabled"
       />
     </div>
-
     <div class="dropdown-list" v-if="showList">
       <input type="text" v-model="search" placeholder="Tìm kiếm..." />
       <div class="dropdown-item" v-for="currency in filteredCurrencies" :key="currency.code"
@@ -44,14 +43,16 @@ const props = defineProps({
   value: {
     type: Number,
     default: 0
+  },
+  isDisabled: {
+    type: Boolean,
+    default: false
   }
 });
 
 const emit = defineEmits(['update:currency', 'update:value']);
 
-const isDisabled = computed(() => {
-  return props.currency === 'VND';
-});
+const isDisabled = ref(props.isDisabled);
 
 const currencies = computed(() => {
   return getCurrencyList(props.currency === 'VND' ? 'VND' : 'all');
@@ -75,9 +76,7 @@ const filteredCurrencies = computed(() =>
 )
 
 function toggleDropdown() {
-  if (!props.isDisabled) {
-    showList.value = !showList.value;
-  }
+  showList.value = !showList.value;
 }
 
 function selectCurrency(currency) {
@@ -94,19 +93,21 @@ function updateValue(valueStr) {
 }
 
 function handleClickOutside(event) {
-  const dropdown = document.querySelector(".dropdown")
+  const dropdown = document.querySelector(".dropdown");
+  console.log(event.target);
+  
   if (!dropdown.contains(event.target)) {
     showList.value = false;
   }
 }
 
-onMounted(() => {
-  document.addEventListener("click", handleClickOutside);
-})
+// onMounted(() => {
+//   document.addEventListener("click", handleClickOutside);
+// })
 
-onBeforeUnmount(() => {
-  document.removeEventListener("click", handleClickOutside);
-})
+// onBeforeUnmount(() => {
+//   document.removeEventListener("click", handleClickOutside);
+// })
 </script>
 
 <style scoped>
