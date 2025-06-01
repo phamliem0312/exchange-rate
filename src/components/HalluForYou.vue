@@ -5,9 +5,9 @@
         <div
           v-for="(feature, index) in features"
           :key="index"
-          :class="['feature-card', { 'highlight-card': index === 0 }]"
+          :class="['feature-card']"
         >
-          <div class="icon-wrapper" :class="{ 'highlight-icon': index === 0 }">
+          <div class="icon-wrapper">
             <img :src="feature.icon" alt="Icon" class="icon" />
           </div>
           <h3 class="feature-title">{{ feature.title }}</h3>
@@ -76,20 +76,17 @@
     background: white;
     border-radius: 12px;
     padding: 24px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 8px 4px rgb(0 0 0 / 20%);
     transition: transform 0.2s ease;
   }
   
   .feature-card:hover {
     transform: translateY(-4px);
-  }
-  
-  .highlight-card {
     background-color: #047857;
     color: white;
   }
 
-  .highlight-card .feature-description{
+  .feature-card:hover .feature-description{
     color: white !important;
   }
   
@@ -104,7 +101,7 @@
     justify-content: center;
   }
   
-  .highlight-icon {
+  .feature-card:hover .highlight-icon {
     background: rgba(255, 255, 255, 0.2);
   }
   

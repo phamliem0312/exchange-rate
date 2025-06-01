@@ -171,6 +171,9 @@ onBeforeUnmount(() => {
     font-style: normal;
     font-weight: 600;
     line-height: 28px;
+    display: inline-block;   /* hoặc block nếu cần */
+    max-width: 400px;        /* giới hạn độ rộng */
+    white-space: nowrap;     /* không xuống dòng */
 }
 
 .notSelectedText {

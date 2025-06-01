@@ -79,6 +79,18 @@ const transfer = () => {
   width: 140px;
   height: 140px;
   object-fit: cover;
+  animation: rollY 4s linear infinite;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+}
+
+@keyframes rollY {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
 }
 
 .transfer-card {

@@ -49,7 +49,7 @@
 
 <script setup>
 
-import customerReviewImage from "@/assets/images/customer_review.png";
+import customerReviewImage from "@/assets/images/customer_review.jpg";
 import appStoreImage from "@/assets/images/app_store.png";
 import googlePlayImage from "@/assets/images/google_play.png";
 

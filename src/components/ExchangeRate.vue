@@ -50,7 +50,6 @@ const openAccount = () => {
 <style scoped>
 .exchange-rate-main {
   width: 100%;
-  background-color: #e9e9e9;
 }
 
 .exchange-rate-body{

@@ -111,7 +111,7 @@ watch(
 
 .exchange-container {
   border-radius: 24px;
-  box-shadow: 0px 40px 32px -24px rgba(15, 15, 15, 0.12);
+  box-shadow: 0 0 15px 10px rgb(0 0 0 / 20%);
   padding: 32px;
   font-family:
     Inter,

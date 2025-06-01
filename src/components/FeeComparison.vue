@@ -16,11 +16,12 @@
             <table class="comparison-table">
                 <thead>
                     <tr>
-                        <th style="width: 25%;">Ngân hàng</th>
-                        <th style="width: 20%;">Tỷ giá</th>
-                        <th style="width: 20%;">Phí chuyển nhượng</th>
-                        <th style="width: 20%;">Người nhận được</th>
-                        <th style="width: 15%;"></th>
+                        <th style="width: 20%;">Ngân hàng</th>
+                        <th style="width: 12%;">Tỷ giá</th>
+                        <th style="width: 18%;">Phí chuyển nhượng</th>
+                        <th style="width: 15%;">Người nhận được</th>
+                        <th style="width: 15%; text-align: center;">Cập nhật lần cuối</th>
+                        <th style="width: 25%;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,36 +30,28 @@
                             <img v-if="bank.logo" :src="bank.logo" alt="logo" class="bank-logo" />
                             {{ bank.name }}
                         </td>
-                        <td style="text-align: center;">{{ formatNumber(bank.rate) }}</td>
+                        <td style="text-align: center;">
+                            <div style="display: flex;">
+                                {{ formatNumber(bank.rate) }}
+                                <div v-if="selectedRow === index" class="status-indicator">
+                                    <div class="status-indicator-center"></div>
+                                </div>
+                            </div>
+                        </td>
                         <td style="text-align: center;">{{ bank.fee }}</td>
                         <td style="text-align: center;">
                             {{ formatNumber(bank.received) }}
                         </td>
-                        <td>
+                        <td style="text-align: center;">
+                            {{ bank.updatedAt }}
+                        </td>
+                        <td style="text-align: right;">
                             <button v-if="selectedRow === index" class="transfer-btn" @click="transferAction()">Chuyển tiền</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div v-if="showMore" class="show-more" @click="showMoreAction()">Xem thêm</div>
-            <!-- <div class="chart-container">
-                <div class="exchange-container">
-                    <div class="chart-title">
-                        <div class="title">Biểu đồ USD sang VND</div>
-                        <div class="percentage-change">↑ +12.49%</div>
-                    </div>
-                    <div class="timestamp">
-                        Ngày 18 tháng 4 năm 2025, 10:06 UTC
-                    </div>
-                </div>
-                <div class="time-selector">
-                    <button v-for="(label, index) in timeRanges" :key="index"
-                        :class="['time-button', { active: selected === label }]" @click="selected = label">
-                        {{ label }}
-                    </button>
-                </div>
-                <img :src="chartImage" alt="chart" class="chart-image" />
-            </div> -->
         </div>
         <div v-if="showPopup" class="overlay">
         <div class="popup">
@@ -131,7 +124,7 @@ import vrbank from '@/assets/icons/vrbank.png';
 import uob from '@/assets/icons/uob.jpg';
 import gpbank from '@/assets/icons/gpbank.png';
 import abbank from '@/assets/icons/abbank.webp';
-import chartImage from '@/assets/images/chart.png';
+import pgbank from '@/assets/icons/pgbank.png';
 
 const logoMap = {
     'MBbank': mbbankLogo,
@@ -158,6 +151,7 @@ const logoMap = {
     'LPbank': lpbank,
     'GPbank': gpbank,
     'ABbank': abbank,
+    'PGbank': pgbank
 };
 
 const props = defineProps({
@@ -362,12 +356,13 @@ input[type="number"] {
 
 .transfer-btn {
     margin-left: 12px;
-    background-color: #28a745;
-    color: white;
+    background-color: #9FE870;
+    color: #163300;
     padding: 12px 24px;
     border: none;
-    border-radius: 5px;
+    border-radius: 90px;
     cursor: pointer;
+    font-family: Inter, sans-serif;
 }
 
 .top-right-decoration {
@@ -575,9 +570,44 @@ textarea {
 .show-more{
     text-align: center;
     padding: 8px 0px;
-    background-color: #047857;
+    background-color: #163300;
     color: #ffffff;
     border-radius: 0px 0px 12px 12px;
     cursor: pointer;
+}
+
+.status-indicator{
+    width: 22px;
+    height: 22px;
+    border-radius: 1000px;
+    background: #c5e9c8;
+    margin-left: 8px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.status-indicator-center{
+    width: 8px;
+    height: 8px;
+    border-radius: 1000px;
+    background: #14AF23;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 </style>
