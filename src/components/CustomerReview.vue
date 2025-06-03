@@ -16,10 +16,10 @@
                             <div class="title">{{ review.title }}</div>
                         </div>
                         <div class="customer-rating">
-                            <span class="customer-rating-text">{{ review.rating }} ⭐</span>
+                            <span class="customer-rating-text">{{ review.rating }} <img :src="shapeIcon" class="shape" alt="shape" /></span>
                         </div>
                     </div>
-                    <p class="review-text">“{{ review.text }}”</p>
+                    <p class="review-text">"{{ review.text }}"</p>
                 </div>
 
                 <div class="pagination">
@@ -52,6 +52,7 @@
 import customerReviewImage from "@/assets/images/customer_review.jpg";
 import appStoreImage from "@/assets/images/app_store.png";
 import googlePlayImage from "@/assets/images/google_play.png";
+import shapeIcon from "@/assets/icons/shape.svg";
 
 const reviews = [
     {
@@ -136,8 +137,12 @@ h2 {
 }
 
 .review-card.featured {
-    background: #245c4f;
+    background: linear-gradient(311.5deg, #2E5144 2.01%, #54A79D 155.8%);
     color: white;
+}
+
+.review-card.featured .review-text{
+    color: #FFFFFF !important;
 }
 
 .review-header {
@@ -170,17 +175,20 @@ h2 {
     color: #161733;
 }
 
-.stars {
+.shape {
     margin-left: auto;
     font-weight: bold;
-    color: orange;
-    font-size: 26px;
+    height: 16px;
+    width: 24px;
+    padding-top: 2px;
 }
 
 .review-text {
+    font-size: 14px;
+    line-height: 22px;
+    color: #777E90;
+    font-family: Inter, Arial, sans-serif;
     font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
 }
 
 .pagination {

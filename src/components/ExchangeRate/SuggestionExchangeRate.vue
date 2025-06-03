@@ -49,7 +49,7 @@ defineExpose({
 .rate-title {
   color: var(--Neutrals-2, #23262F);
   font-family: Inter, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: 24px;
@@ -57,26 +57,25 @@ defineExpose({
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
 }
 
 .rate-display {
   display: flex;
-  padding: 16px 0px;
-  font-size: 20px;
+  padding: 4px 0px;
+  font-size: 14px;
   color: #163300;
   text-align: center;
 }
 
 .rate-value {
-  flex: 1;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+  margin: auto;
+  padding: 8px 16px;
+  background-color: #F4F5F6;
+  border-radius: 24px;
 }
 
 .info-icon {
-  width: 18px;
+  width: 14px;
 }
 
 @media (max-width: 991px) {

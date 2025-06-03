@@ -14,11 +14,10 @@
         class="amount-input"
         inputmode="numeric"
         @input="updateValue($event.target.value)"
-        :disabled="isDisabled"
       />
     </div>
     <div class="dropdown-list" v-if="showList">
-      <input type="text" v-model="search" placeholder="Tìm kiếm..." />
+      <input v-if="!!isDisabled" type="text" v-model="search" placeholder="Tìm kiếm..." />
       <div class="dropdown-item" v-for="currency in filteredCurrencies" :key="currency.code"
         @click.stop="selectCurrency(currency)">
         <img :src="currency.flag" alt="">
@@ -30,7 +29,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed } from 'vue';
 import arrowDownIcon from "@/assets/icons/arrow-down.png";
 import { formatNumber, parseFormattedNumber } from "@/utils/number";
 import { getCurrencyList } from '@/services/config';

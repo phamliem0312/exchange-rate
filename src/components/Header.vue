@@ -88,7 +88,7 @@ function registerAction() {
 .header {
   display: flex;
   align-items: center;
-  padding: 12px 5%;
+  padding: 6px 5%;
 }
 
 .logo {
@@ -105,7 +105,7 @@ function registerAction() {
 .brand {
   color: var(--Neutrals-2, #23262F);
   font-family: Poppins, sans-serif;
-  font-size: 24px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 600;
   padding: 4px 0px;
@@ -126,11 +126,11 @@ function registerAction() {
   gap: 10px;
   color: var(--Secondary-2, #000000);
   font-family: Inter, sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 600;
   text-decoration: none;
-  line-height: 28px;
+  line-height: 26px;
   position: relative;
 }
 

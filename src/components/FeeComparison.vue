@@ -16,12 +16,11 @@
             <table class="comparison-table">
                 <thead>
                     <tr>
-                        <th style="width: 20%;">Ngân hàng</th>
-                        <th style="width: 12%;">Tỷ giá</th>
+                        <th style="width: 28%;">Ngân hàng</th>
+                        <th style="width: 18%;">Tỷ giá</th>
                         <th style="width: 18%;">Phí chuyển nhượng</th>
-                        <th style="width: 15%;">Người nhận được</th>
-                        <th style="width: 15%; text-align: center;">Cập nhật lần cuối</th>
-                        <th style="width: 25%;"></th>
+                        <th style="width: 18%;">Người nhận được</th>
+                        <th style="width: 18%;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,16 +41,12 @@
                         <td style="text-align: center;">
                             {{ formatNumber(bank.received) }}
                         </td>
-                        <td style="text-align: center;">
-                            {{ bank.updatedAt }}
-                        </td>
                         <td style="text-align: right;">
                             <button v-if="selectedRow === index" class="transfer-btn" @click="transferAction()">Chuyển tiền</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <div v-if="showMore" class="show-more" @click="showMoreAction()">Xem thêm</div>
         </div>
         <div v-if="showPopup" class="overlay">
         <div class="popup">
@@ -174,11 +169,9 @@ const toValue = computed(() => {
     return fromValue.value / suggestionCurrencyValue.value;
 });
 
-const timeRanges = ['12 giờ', '1 ngày', '1 tuần', '1 tháng', '1 năm', '2 năm', '5 năm', '10 năm']
-const selected = ref('12 giờ');
 const selectedRow = ref(0);
 const showPopup = ref(false);
-const limit = ref(5);
+const limit = ref(50);
 const form = ref({
   name: '',
   phone: '',
@@ -279,7 +272,6 @@ watch(
 
 .currency-box {
     background: white;
-    padding: 1rem;
     border-radius: 8px;
     width: -webkit-fill-available;
 }
@@ -328,13 +320,18 @@ input[type="number"] {
     color: #ffffff;
 }
 
+.comparison-table tbody{
+    border: 1px solid #ddd;
+}
+
 .comparison-table thead tr th {
     color: #ffffff !important;
+    border: solid 0.5px #555555;
 }
 
 .comparison-table th,
 .comparison-table td {
-    padding: 8px 16px;
+    padding: 0px 16px;
     border-bottom: 1px solid #ddd;
     text-align: left;
     height: 56px;
@@ -343,7 +340,6 @@ input[type="number"] {
     font-weight: 600;
     font-size: 14px;
     line-height: 20px;
-    letter-spacing: 0%;
     vertical-align: middle;
 }
 
@@ -355,7 +351,6 @@ input[type="number"] {
 }
 
 .transfer-btn {
-    margin-left: 12px;
     background-color: #9FE870;
     color: #163300;
     padding: 12px 24px;

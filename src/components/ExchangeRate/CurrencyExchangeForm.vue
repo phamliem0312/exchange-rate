@@ -49,7 +49,7 @@ const sourceValue = ref(0);
 const suggestionCurrencyValue = ref(1);
 const suggestionBankCode = ref(null);
 
-const targetValue = computed(() => {
+const targetValue = ref(0); computed(() => {
   if (suggestionCurrencyValue.value === 0) {
     return 0;
   }
@@ -97,10 +97,9 @@ watch(
   display: flex;
   width: 100%;
   align-items: center;
-  gap: 8px;
-  font-size: 16px;
+  font-size: 14px;
   color: #161733;
-  padding: 4px 0px;
+  padding: 4px 0px 6px 0px;
 }
 
 .field-label {
@@ -132,7 +131,7 @@ watch(
 
 .divider {
   position: relative;
-  margin: 24px 0px 12px 0px;
+  margin: 4px 0px 0px 0px;
 }
 
 .divider-image {

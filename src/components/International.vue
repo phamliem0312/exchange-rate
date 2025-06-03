@@ -1,9 +1,14 @@
 <template>
   <div class="international-transfer">
     <!-- Flag Icons -->
-    <div class="flags-container">
-      <img v-for="(flag, index) in flags" :key="index" :src="flag" class="flag" alt="flag" />
-    </div>
+     <div class="flags-content">
+        <div class="flags-container flags-container-1">
+          <img v-for="(flag, index) in flags" :key="index" :src="flag" class="flag" alt="flag" />
+        </div>
+        <div class="flags-container flags-container-2">
+          <img v-for="(flag, index) in flags" :key="index" :src="flag" class="flag" alt="flag" />
+        </div>
+     </div>
 
     <!-- Hero Section -->
     <div class="transfer-card">
@@ -37,6 +42,7 @@ import gbIcon from '@/assets/flags/gb.svg';
 import hkIcon from '@/assets/flags/sg.svg';
 import krIcon from '@/assets/flags/kr.svg';
 import thIcon from '@/assets/flags/th.svg';
+import nzIcon from '@/assets/flags/nz.svg';
 const flags = [
   caIcon,
   chIcon,
@@ -45,7 +51,8 @@ const flags = [
   gbIcon,
   hkIcon,
   krIcon,
-  thIcon
+  thIcon,
+  nzIcon,
 ];
 
 const scrollToTarget = () => {
@@ -67,29 +74,50 @@ const transfer = () => {
   font-family: sans-serif;
 }
 
-.flags-container {
+.flags-content{
+  overflow: hidden;
+  position: relative;
+  width: 100%;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 16px;
+  height: 180px;
+}
+
+.flags-container {
   margin-bottom: 30px;
+  display: flex;
+  position: absolute;
+}
+
+.flags-container-1 {
+  animation: scroll-right-1 13s linear infinite;
+}
+
+.flags-container-2 {
+  animation: scroll-right-2 13s linear infinite;
 }
 
 .flag {
   width: 140px;
   height: 140px;
   object-fit: cover;
-  animation: rollY 4s linear infinite;
-  transform-style: preserve-3d;
-  transform-origin: center center;
+  display: flex;
 }
 
-@keyframes rollY {
-  from {
-    transform: rotateY(0deg);
+@keyframes scroll-right-1 {
+  0% {
+    transform: translateX(-100%);
   }
-  to {
-    transform: rotateY(360deg);
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes scroll-right-2 {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
   }
 }
 
@@ -115,7 +143,7 @@ const transfer = () => {
 
 .right-side {
   width: 50%;
-  background: linear-gradient(135deg, #166534, #047857);
+  background: linear-gradient(311.5deg, #2E5144 2.01%, #54A79D 155.8%);
   color: white;
   padding: 64px;
   display: flex;
@@ -134,7 +162,7 @@ const transfer = () => {
 }
 
 .right-side h2 {
-  font-size: 24px;
+  font-size: 40px;
   margin-bottom: 12px;
 }
 
@@ -150,7 +178,7 @@ const transfer = () => {
 }
 
 button {
-  padding: 10px 16px;
+  padding: 12px 32px;
   font-size: 14px;
   border-radius: 20px;
   border: none;

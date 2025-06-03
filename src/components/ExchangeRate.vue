@@ -54,25 +54,24 @@ const openAccount = () => {
 
 .exchange-rate-body{
   display: flex;
-  width: 100%;
-  padding: 56px 0px;
   max-width: 1440px;
+  padding: 56px 5%;
   margin: auto;
 }
 
-.exchange-rate-content {
-  width: calc(95% - 565px);
+.exchange-rate-content{
+  padding-right: 16px;
+  align-items: center;
+  align-content: center;
 }
 
 .exchange-rate-title {
-  max-width: 578px;
   color: var(--Neutrals-1, #161733);
   font-family: Inter, sans-serif;
   font-size: 72px;
   font-style: normal;
   font-weight: 600;
   line-height: 80px;
-  padding: 0px 150px 0px 105px;
 }
 
 .exchange-rate-title span {
@@ -91,7 +90,7 @@ const openAccount = () => {
   font-size: 18px;
   line-height: 30px;
   vertical-align: middle;
-  padding: 24px 105px;
+  padding: 24px 0px;
   text-align: left;
   color: #161733;
 }
@@ -100,7 +99,6 @@ const openAccount = () => {
   width: inherit;
 }
 
-
 .exchange-rate-form {
   width: 565px;
   display: flex;
@@ -108,7 +106,6 @@ const openAccount = () => {
 
 .buttons-container {
   width: 100%;
-  padding: 0px 105px;
 }
 
 .transfer-button {

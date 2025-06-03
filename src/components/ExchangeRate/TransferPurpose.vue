@@ -99,9 +99,9 @@ onBeforeUnmount(() => {
     width: 100%;
     align-items: center;
     gap: 8px;
-    font-size: 16px;
+    font-size: 14px;
     color: #161733;
-    padding: 4px 0px;
+    padding: 4px 0px 6px 0px;
 }
 
 .field-label {
@@ -113,7 +113,7 @@ onBeforeUnmount(() => {
 .dropdown-wrapper {
     width: 100%;
     position: relative;
-    height: 76px;
+    height: 60px;
 }
 
 .dropdown-input {
@@ -167,13 +167,13 @@ onBeforeUnmount(() => {
     color: var(--Neutrals-1, #161733);
     text-overflow: ellipsis;
     font-family: Inter, sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    line-height: 28px;
-    display: inline-block;   /* hoặc block nếu cần */
-    max-width: 400px;        /* giới hạn độ rộng */
-    white-space: nowrap;     /* không xuống dòng */
+    line-height: 20px;
+    display: inline-block;
+    max-width: 400px;
+    white-space: nowrap;
 }
 
 .notSelectedText {
@@ -181,10 +181,10 @@ onBeforeUnmount(() => {
     color: var(--Neutrals-3, #B1B5C3);
     text-overflow: ellipsis;
     font-family: Inter, sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    line-height: 28px;
+    line-height: 20px;
 }
 
 .selected {
@@ -211,8 +211,8 @@ onBeforeUnmount(() => {
 .fee-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 12px;
-    font-size: 14px;
+    padding: 4px 0px;
+    font-size: 12px;
 }
 
 .fee-row .label {
@@ -224,7 +224,7 @@ onBeforeUnmount(() => {
     font-weight: bold;
     color: #23262F;
     line-height: 20px;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 hr {
@@ -236,13 +236,13 @@ hr {
 .fee-total {
     display: flex;
     justify-content: space-between;
-    font-size: 15px;
+    font-size: 14px;
     color: #000;
 }
 
 .total-amount {
     font-weight: bold;
-    font-size: 20px;
-    line-height: 26px;
+    font-size: 16px;
+    line-height: 20px;
 }
 </style>

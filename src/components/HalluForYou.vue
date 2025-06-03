@@ -5,7 +5,7 @@
         <div
           v-for="(feature, index) in features"
           :key="index"
-          :class="['feature-card']"
+          :class="['feature-card', { 'highlight-card': index === 0 }]"
         >
           <div class="icon-wrapper">
             <img :src="feature.icon" alt="Icon" class="icon" />
@@ -80,13 +80,12 @@
     transition: transform 0.2s ease;
   }
   
-  .feature-card:hover {
-    transform: translateY(-4px);
-    background-color: #047857;
+  .highlight-card {
+    background: linear-gradient(311.5deg, #2E5144 2.01%, #54A79D 155.8%);
     color: white;
   }
 
-  .feature-card:hover .feature-description{
+  .highlight-card .feature-description{
     color: white !important;
   }
   
@@ -113,19 +112,21 @@
   .feature-title {
     text-align: center;
     font-family: Inter, sans-serif;
-    font-size: 24px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 600;
-    line-height: 32px;
+    line-height: 28px;
+    height: 56px;
   }
   
   .feature-description {
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 24px;
     color: var(--Neutrals-4, #777E90);
+    font-family: Inter, sans-serif;
   }
   </style>
   

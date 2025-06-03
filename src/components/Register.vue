@@ -26,17 +26,25 @@
   }
   
   .register-content {
-    width: calc(95% - 565px);
+    width: 50%;
+  }
+
+  .register-banner {
+    width: 50%;
+  }
+
+  .register-banner img {
+    width: 100%;
   }
   
   .register-title {
     max-width: 578px;
     color: var(--Neutrals-1, #161733);
     font-family: Inter, sans-serif;
-    font-size: 72px;
+    font-size: 48px;
     font-style: normal;
     font-weight: 600;
-    line-height: 80px;
+    line-height: 66px;
     padding: 0px 140px;
   }
   
