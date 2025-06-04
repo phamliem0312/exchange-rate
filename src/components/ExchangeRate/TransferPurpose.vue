@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    <div v-if="selectedPurpose" class="fee-box">
+    <div class="fee-box">
         <div class="fee-row">
             <span class="label">Phí tài khoản ngân hàng được kết nối (VCB)</span>
             <span class="amount">1.70 USD</span>

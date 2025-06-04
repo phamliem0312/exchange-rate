@@ -31,7 +31,7 @@ import SuggestionExchangeRate from "./SuggestionExchangeRate.vue";
 import CurrencyInput from "./CurrencyInput.vue";
 import exchangeIcon from "@/assets/icons/exchange.png";
 import TransferPurpose from "./TransferPurpose.vue";
-import { watch, ref, computed } from "vue";
+import { watch, ref } from "vue";
 import { getBestExchangeRate } from "@/services/api";
 
 const emit = defineEmits(['update:currency']);
@@ -46,14 +46,42 @@ const props = defineProps({
 const sourceCurrency = ref("VND");
 const targetCurrency = ref(props.currency);
 const sourceValue = ref(0);
+const targetValue = ref(0);
 const suggestionCurrencyValue = ref(1);
 const suggestionBankCode = ref(null);
+const isUpdateSource = ref(false);
+const isUpdateTarget = ref(false);
 
-const targetValue = ref(0); computed(() => {
-  if (suggestionCurrencyValue.value === 0) {
-    return 0;
+watch(sourceValue, () => {
+  if(isUpdateTarget.value) {
+    isUpdateTarget.value = false;
+    return;
   }
-  return sourceValue.value / suggestionCurrencyValue.value;
+  if (suggestionCurrencyValue.value === 0) {
+    targetValue.value = 0;
+    return;
+  }
+  isUpdateSource.value = true;
+  
+  targetValue.value = sourceValue.value / suggestionCurrencyValue.value;
+  
+  isUpdateSource.value = false;
+});
+
+watch(targetValue, () => {
+  if(isUpdateSource.value) {
+    isUpdateSource.value = false;
+    return;
+  }
+  if (suggestionCurrencyValue.value === 0) {
+    sourceValue.value = 0;
+    return;
+  }
+  isUpdateTarget.value = true;
+
+  sourceValue.value = targetValue.value * suggestionCurrencyValue.value;
+
+  isUpdateTarget.value = false;
 });
 
 const setBestExchangeRate = async () => {
@@ -90,6 +118,16 @@ watch(
   },
   { immediate: true }
 );
+
+watch(
+  suggestionCurrencyValue,
+  () => {
+      isUpdateSource.value = true;
+      
+      targetValue.value = sourceValue.value / suggestionCurrencyValue.value;
+      
+      isUpdateSource.value = false;
+    });
 </script>
 
 <style scoped>

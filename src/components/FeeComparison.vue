@@ -9,7 +9,7 @@
                 </div>
                 <button class="swap-button">⇄</button>
                 <div class="currency-box">
-                    <CurrencyInput v-model:currency="toCurrency" v-model:value="toValue" :isDisabled="true"/>
+                    <CurrencyInput v-model:currency="toCurrency" v-model:value="toValue" :isDisabled="true" />
                 </div>
             </div>
 
@@ -24,7 +24,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(bank, index) in banks" :key="bank.name" @click="selectBank(bank, index)" class="bank-row">
+                    <tr v-for="(bank, index) in banks" :key="bank.name" @click="selectBank(bank, index)"
+                        class="bank-row">
                         <td>
                             <img v-if="bank.logo" :src="bank.logo" alt="logo" class="bank-logo" />
                             {{ bank.name }}
@@ -42,55 +43,56 @@
                             {{ formatNumber(bank.received) }}
                         </td>
                         <td style="text-align: right;">
-                            <button v-if="selectedRow === index" class="transfer-btn" @click="transferAction()">Chuyển tiền</button>
+                            <button v-if="selectedRow === index" class="transfer-btn" @click="transferAction()">Chuyển
+                                tiền</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div v-if="showPopup" class="overlay">
-        <div class="popup">
-            <div class="contact-title">
-            Liên hệ ngay
-            <button class="close-btn" @click="showPopup = false">×</button>
-            </div>
+            <div class="popup">
+                <div class="contact-title">
+                    Liên hệ ngay
+                    <button class="close-btn" @click="showPopup = false">×</button>
+                </div>
 
-            <form @submit.prevent="submitForm">
-            <div class="form-row">
-                <label>
-                Họ và tên <span class="required">*</span>
-                </label>
-                <input type="text" v-model="form.name" placeholder="Nhập họ và tên" required />
+                <form @submit.prevent="submitForm">
+                    <div class="form-row">
+                        <label>
+                            Họ và tên <span class="required">*</span>
+                        </label>
+                        <input type="text" v-model="form.name" placeholder="Nhập họ và tên" required />
+                    </div>
+                    <div class="form-row">
+                        <label>
+                            Số điện thoại <span class="required">*</span>
+                        </label>
+                        <input type="tel" v-model="form.phone" placeholder="Nhập số điện thoại" required />
+                    </div>
+                    <div class="form-row">
+                        <label>
+                            Email <span class="required">*</span>
+                        </label>
+                        <input type="email" v-model="form.email" placeholder="Nhập email" required />
+                    </div>
+                    <div class="form-row">
+                        <label>
+                            Nội dung <span class="required">*</span>
+                        </label>
+                        <textarea v-model="form.message" placeholder="Nhập nội dung" required></textarea>
+                    </div>
+                    <div class="form-row" style="text-align: center;">
+                        <button type="submit" class="submit-btn">Gửi thông tin →</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-row">
-                <label>
-                Số điện thoại <span class="required">*</span>
-                </label>
-                <input type="tel" v-model="form.phone" placeholder="Nhập số điện thoại" required />
-            </div>
-            <div class="form-row">
-                <label>
-                Email <span class="required">*</span>
-                </label>
-                <input type="email" v-model="form.email" placeholder="Nhập email" required />
-            </div>
-            <div class="form-row">
-                <label>
-                Nội dung <span class="required">*</span>
-                </label>
-                <textarea v-model="form.message" placeholder="Nhập nội dung" required></textarea>
-            </div>
-            <div class="form-row" style="text-align: center;">
-                <button type="submit" class="submit-btn">Gửi thông tin →</button>
-            </div>
-            </form>
-        </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue';
+import { ref, watch } from 'vue';
 import { getBestExchangeRate, getExchangeRateList } from "@/services/api";
 import { formatNumber } from "@/utils/number";
 import CurrencyInput from "./ExchangeRate/CurrencyInput.vue";
@@ -150,33 +152,62 @@ const logoMap = {
 };
 
 const props = defineProps({
-  compareCurrency: {
-    type: String,
-    required: true
-  }
+    compareCurrency: {
+        type: String,
+        required: true
+    }
 });
 
 const fromCurrency = ref('VND');
 const toCurrency = ref('USD');
 const fromValue = ref(0);
+const toValue = ref(0);
 const suggestionCurrencyValue = ref(0);
 const banks = ref([]);
 const showMore = ref(true);
-const toValue = computed(() => {
-    if (suggestionCurrencyValue.value === 0) {
-        return 0;
-    }
-    return fromValue.value / suggestionCurrencyValue.value;
-});
+const isUpdateFrom = ref(false);
+const isUpdateTo = ref(false);
 
 const selectedRow = ref(0);
 const showPopup = ref(false);
 const limit = ref(50);
 const form = ref({
-  name: '',
-  phone: '',
-  email: '',
-  message: ''
+    name: '',
+    phone: '',
+    email: '',
+    message: ''
+});
+
+watch(fromValue, () => {
+    if (isUpdateTo.value) {
+        isUpdateTo.value = false;
+        return;
+    }
+    if (suggestionCurrencyValue.value === 0) {
+        toValue.value = 0;
+        return;
+    }
+    isUpdateFrom.value = true;
+
+    toValue.value = fromValue.value / suggestionCurrencyValue.value;
+
+    isUpdateFrom.value = false;
+});
+
+watch(toValue, () => {
+    if (isUpdateFrom.value) {
+        isUpdateFrom.value = false;
+        return;
+    }
+    if (suggestionCurrencyValue.value === 0) {
+        fromValue.value = 0;
+        return;
+    }
+    isUpdateTo.value = true;
+
+    fromValue.value = toValue.value * suggestionCurrencyValue.value;
+
+    isUpdateTo.value = false;
 });
 
 const setBestExchangeRate = async () => {
@@ -243,6 +274,16 @@ watch(
     },
     { immediate: true }
 );
+
+watch(
+  suggestionCurrencyValue,
+  () => {
+      isUpdateFrom.value = true;
+      
+      toValue.value = fromValue.value / suggestionCurrencyValue.value;
+      
+      isUpdateFrom.value = false;
+    });
 
 </script>
 
@@ -320,7 +361,7 @@ input[type="number"] {
     color: #ffffff;
 }
 
-.comparison-table tbody{
+.comparison-table tbody {
     border: 1px solid #ddd;
 }
 
@@ -471,98 +512,99 @@ input[type="number"] {
 }
 
 .contact-title {
-  font-size: 40px;
-  line-height: 48px;
-  font-family: Inter, sans-serif;
-  font-weight: bold;
-  margin-bottom: 16px;
+    font-size: 40px;
+    line-height: 48px;
+    font-family: Inter, sans-serif;
+    font-weight: bold;
+    margin-bottom: 16px;
 }
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .popup {
-  background: white;
-  border-radius: 16px;
-  padding: 24px;
-  width: 600px;
-  position: relative;
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    width: 600px;
+    position: relative;
 }
 
 .close-btn {
-  position: absolute;
-  right: 16px;
-  background: transparent;
-  border-radius: 40px;
-  border: solid 1px #E6E8EC;
-  font-size: 32px;
-  cursor: pointer;
-  color: #E6E8EC;
-  width: 40px;
-  height: 40px;
+    position: absolute;
+    right: 16px;
+    background: transparent;
+    border-radius: 40px;
+    border: solid 1px #E6E8EC;
+    font-size: 32px;
+    cursor: pointer;
+    color: #E6E8EC;
+    width: 40px;
+    height: 40px;
 }
+
 h2 {
-  margin-bottom: 16px;
-  font-size: 24px;
+    margin-bottom: 16px;
+    font-size: 24px;
 }
 
 .form-row {
-  margin-bottom: 16px;
+    margin-bottom: 16px;
 }
 
 form label {
-  display: block;
-  font-size: 14px;
-  color: #333;
-  font-weight: bold;
+    display: block;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
 }
 
 input,
 textarea {
-  width: calc(100% - 24px);
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-top: 4px;
-  font-size: 14px;
+    width: calc(100% - 24px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 4px;
+    font-size: 14px;
 }
 
 textarea {
-  min-height: 80px;
-  resize: vertical;
+    min-height: 80px;
+    resize: vertical;
 }
 
 .required {
-  color: red;
+    color: red;
 }
 
 .submit-btn {
-  margin-top: 12px;
-  background-color: #a3e635;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 999px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 15px;
-  color: #000;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s ease;
+    margin-top: 12px;
+    background-color: #a3e635;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    color: #000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
 }
 
-.show-more{
+.show-more {
     text-align: center;
     padding: 8px 0px;
     background-color: #163300;
@@ -571,7 +613,7 @@ textarea {
     cursor: pointer;
 }
 
-.status-indicator{
+.status-indicator {
     width: 22px;
     height: 22px;
     border-radius: 1000px;
@@ -583,7 +625,7 @@ textarea {
     animation: pulse 1.5s infinite ease-in-out;
 }
 
-.status-indicator-center{
+.status-indicator-center {
     width: 8px;
     height: 8px;
     border-radius: 1000px;
@@ -592,17 +634,19 @@ textarea {
 }
 
 @keyframes pulse {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.4);
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.4);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 </style>

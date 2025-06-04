@@ -100,8 +100,9 @@ const openAccount = () => {
 }
 
 .exchange-rate-form {
-  width: 565px;
+  width: 580px;
   display: flex;
+  height: 680px;
 }
 
 .buttons-container {

@@ -10,7 +10,7 @@
       </div>
       <input
         type="text"
-        :value="formatNumber(value)"
+        :value="formatNumber(value, currency)"
         class="amount-input"
         inputmode="numeric"
         @input="updateValue($event.target.value)"
@@ -93,7 +93,6 @@ function updateValue(valueStr) {
 
 function handleClickOutside(event) {
   const dropdown = document.querySelector(".dropdown");
-  console.log(event.target);
   
   if (!dropdown.contains(event.target)) {
     showList.value = false;
