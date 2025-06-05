@@ -16,64 +16,16 @@
         <a href="#">Đăng ký</a>
       </button>
     </div>
-    <div v-if="showPopup" class="overlay">
-      <div class="popup">
-        <div class="contact-title">
-          Liên hệ ngay
-          <button class="close-btn" @click="showPopup = false">×</button>
-        </div>
-
-        <form @submit.prevent="submitForm">
-          <div class="form-row">
-            <label>
-              Họ và tên <span class="required">*</span>
-            </label>
-            <input type="text" v-model="form.name" placeholder="Nhập họ và tên" required />
-          </div>
-          <div class="form-row">
-            <label>
-              Số điện thoại <span class="required">*</span>
-            </label>
-            <input type="tel" v-model="form.phone" placeholder="Nhập số điện thoại" required />
-          </div>
-          <div class="form-row">
-            <label>
-              Email <span class="required">*</span>
-            </label>
-            <input type="email" v-model="form.email" placeholder="Nhập email" required />
-          </div>
-          <div class="form-row">
-            <label>
-              Nội dung <span class="required">*</span>
-            </label>
-            <textarea v-model="form.message" placeholder="Nhập nội dung" required></textarea>
-          </div>
-          <div class="form-row" style="text-align: center;">
-            <button type="submit" class="submit-btn">Gửi thông tin →</button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <SupportForm v-model:showPopup="showPopup" />
   </header>
 </template>
 
 <script setup>
 import logo from '@/assets/images/logo.png';
 import { ref } from 'vue';
+import SupportForm from './ExchangeRate/SupportForm.vue';
 
 const showPopup = ref(false);
-const form = ref({
-  name: '',
-  phone: '',
-  email: '',
-  message: ''
-});
-
-const submitForm = () => {
-  console.log('Form data:', form);
-  alert('Thông tin đã được gửi!');
-  showPopup.value = false;
-}
 
 function loginAction() {
   alert('Tính năng đang được phát triển');
