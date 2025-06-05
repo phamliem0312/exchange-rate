@@ -24,11 +24,13 @@
       <button class="compare-button" @click="scrollToTarget()">So sánh phí</button>
     </div>
   </div>
+  <SupportForm v-model:showPopup="showPopup" />
 </template>
 
 <script setup>
 import SuggestionExchangeRate from "./SuggestionExchangeRate.vue";
 import CurrencyInput from "./CurrencyInput.vue";
+import SupportForm from "./SupportForm.vue";
 import exchangeIcon from "@/assets/icons/exchange.png";
 import TransferPurpose from "./TransferPurpose.vue";
 import { watch, ref } from "vue";
@@ -51,6 +53,7 @@ const suggestionCurrencyValue = ref(1);
 const suggestionBankCode = ref(null);
 const isUpdateSource = ref(false);
 const isUpdateTarget = ref(false);
+const showPopup = ref(false);
 
 watch(sourceValue, () => {
   if(isUpdateTarget.value) {
@@ -107,7 +110,7 @@ const scrollToTarget = () => {
 }
 
 const transfer = () => {
-  alert("Tính năng đang được phát triển");
+  showPopup.value = true;
 };
 
 watch(

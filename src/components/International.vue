@@ -30,10 +30,13 @@
         </div>
       </div>
     </div>
+  <SupportForm v-model:showPopup="showPopup" />
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import SupportForm from './ExchangeRate/SupportForm.vue';
 import caIcon from '@/assets/flags/jp.svg';
 import chIcon from '@/assets/flags/ch.svg';
 import cnIcon from '@/assets/flags/cn.svg';
@@ -55,6 +58,8 @@ const flags = [
   nzIcon,
 ];
 
+const showPopup = ref(false);
+
 const scrollToTarget = () => {
   const element = document.querySelector('.fee-comparison')
   if (element) {
@@ -63,7 +68,7 @@ const scrollToTarget = () => {
 }
 
 const transfer = () => {
-  alert("Tính năng đang được phát triển");
+  showPopup.value = true;
 };
 </script>
 
