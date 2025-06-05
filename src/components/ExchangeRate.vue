@@ -87,8 +87,8 @@ const openAccount = () => {
   max-width: 578px;
   font-family: Inter, sans-serif;
   font-weight: 400;
-  font-size: 18px;
-  line-height: 30px;
+  font-size: 24px;
+  line-height: 40px;
   vertical-align: middle;
   padding: 24px 0px;
   text-align: left;

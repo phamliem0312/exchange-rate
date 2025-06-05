@@ -178,7 +178,7 @@ const transfer = () => {
 }
 
 button {
-  padding: 12px 32px;
+  padding: 12px 64px;
   font-size: 14px;
   border-radius: 20px;
   border: none;

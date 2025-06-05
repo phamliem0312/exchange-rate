@@ -394,11 +394,12 @@ input[type="number"] {
 .transfer-btn {
     background-color: #9FE870;
     color: #163300;
-    padding: 12px 24px;
+    padding: 8px 16px;
     border: none;
     border-radius: 90px;
     cursor: pointer;
     font-family: Inter, sans-serif;
+    font-weight: 600;
 }
 
 .top-right-decoration {

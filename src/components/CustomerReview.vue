@@ -12,19 +12,14 @@
                     <div class="review-header">
                         <img :src="review.avatar" alt="Avatar" class="avatar" />
                         <div>
-                            <div class="name">{{ review.name }}</div>
-                            <div class="title">{{ review.title }}</div>
+                            <div class="name">{{ review.title }}</div>
+                            <div class="title">{{ review.name }}</div>
                         </div>
                         <div class="customer-rating">
                             <span class="customer-rating-text">{{ review.rating }} <img :src="shapeIcon" class="shape" alt="shape" /></span>
                         </div>
                     </div>
                     <p class="review-text">"{{ review.text }}"</p>
-                </div>
-
-                <div class="pagination">
-                    <button>&larr;</button>
-                    <button>&rarr;</button>
                 </div>
             </div>
         </div>
@@ -105,7 +100,6 @@ const reviews = [
     width: 100%;
     border-radius: 24px;
     object-fit: cover;
-    height: 100%;
 }
 
 .customer-rating-text {
@@ -116,6 +110,10 @@ const reviews = [
     gap: 8px;
     border-radius: 999px;
     background-color: #FDF6E8;
+}
+
+.review-card p {
+    margin: 0px !important;
 }
 
 .right-section {
@@ -131,8 +129,8 @@ h2 {
 .review-card {
     background: #f9f9f9;
     border-radius: 24px;
-    padding: 24px;
-    margin-top: 40px;
+    padding: 16px 24px;
+    margin-top: 16px;
     border: 2px solid #e0e0e0;
 }
 
@@ -189,6 +187,7 @@ h2 {
     color: #777E90;
     font-family: Inter, Arial, sans-serif;
     font-weight: 400;
+    padding-top: 16px;
 }
 
 .pagination {

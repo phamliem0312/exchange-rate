@@ -126,7 +126,7 @@ function registerAction() {
   gap: 10px;
   color: var(--Secondary-2, #000000);
   font-family: Inter, sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 600;
   text-decoration: none;
@@ -171,8 +171,8 @@ function registerAction() {
   background: #ffffff;
   border: 1px solid #ccc;
   display: flex;
-  width: 124px;
-  padding: 12px 16px;
+  width: 108px;
+  padding: 8px 0px;
   justify-content: center;
   align-items: center;
   gap: 12px;
@@ -182,8 +182,8 @@ function registerAction() {
 
 .register-btn {
   display: flex;
-  width: 124px;
-  padding: 12px 16px;
+  width: 108px;
+  padding: 8px 0px;
   justify-content: center;
   align-items: center;
   gap: 12px;
