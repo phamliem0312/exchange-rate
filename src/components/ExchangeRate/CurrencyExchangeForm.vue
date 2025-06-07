@@ -151,7 +151,7 @@ watch(
 
 .exchange-container {
   border-radius: 24px;
-  box-shadow: 0 0 15px 10px rgb(0 0 0 / 20%);
+  box-shadow: 0 0 30px 6px rgb(0 0 0 / 10%);
   padding: 32px;
   font-family:
     Inter,
@@ -172,7 +172,7 @@ watch(
 
 .divider {
   position: relative;
-  margin: 4px 0px 0px 0px;
+  margin: 12px 0px 6px 0px;
 }
 
 .divider-image {
@@ -234,6 +234,7 @@ watch(
   color: #23262f;
   border: 2px solid var(--Neutrals-6, #e6e8ec);
   font-size: 16px;
+  background-color: #ffffff;
 }
 
 .purpose-section {

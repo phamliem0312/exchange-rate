@@ -1,16 +1,16 @@
 <template>
     <div class="features-section">
-      <h2 class="features-title">Hallu mang đến cho bạn</h2>
+      <div class="features-title">Hallu mang đến cho bạn</div>
       <div class="features-grid">
         <div
           v-for="(feature, index) in features"
           :key="index"
-          :class="['feature-card', { 'highlight-card': index === 0 }]"
+          :class="['feature-card']"
         >
           <div class="icon-wrapper">
             <img :src="feature.icon" alt="Icon" class="icon" />
           </div>
-          <h3 class="feature-title">{{ feature.title }}</h3>
+          <div class="feature-title">{{ feature.title }}</div>
           <p class="feature-description">{{ feature.description }}</p>
         </div>
       </div>
@@ -51,8 +51,9 @@
   <style scoped>
   .features-section {
     background: #f9fafb;
-    padding: 40px 5%;
+    padding: 0px 5% 128px 5%;
     text-align: center;
+    background-color: rgba(244, 245, 246, 1);
   }
   
   .features-title {
@@ -61,31 +62,34 @@
     font-size: 64px;
     font-style: normal;
     font-weight: 600;
-    line-height: 64px; /* 100% */
+    line-height: 64px;
     letter-spacing: -1.28px;
+    padding-bottom: 64px;
   }
   
   .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+    gap: 32px;
     margin: 0 auto;
+    max-width: 1440px;
   }
   
   .feature-card {
     background: white;
-    border-radius: 12px;
+    border-radius: 24px;
     padding: 24px;
-    box-shadow: 0 0 8px 4px rgb(0 0 0 / 20%);
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
     transition: transform 0.2s ease;
+    width: 260px;
   }
   
-  .highlight-card {
+  .feature-card:hover {
     background: linear-gradient(311.5deg, #2E5144 2.01%, #54A79D 155.8%);
     color: white;
   }
 
-  .highlight-card .feature-description{
+  .feature-card:hover .feature-description{
     color: white !important;
   }
   
@@ -117,6 +121,8 @@
     font-weight: 600;
     line-height: 28px;
     height: 56px;
+    width: 180px;
+    margin: auto;
   }
   
   .feature-description {

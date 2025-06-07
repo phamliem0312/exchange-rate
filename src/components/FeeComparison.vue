@@ -3,6 +3,11 @@
         <div class="comparison-label">So sánh phí</div>
         <img :src="mainPicTop" alt="corner decoration" class="top-right-decoration" />
         <div class="transfer-box-main">
+            <div class="transfer-notification">
+                <img src="@/assets/icons/filled.svg" alt="icon" />
+                <strong>Lưu ý: </strong>
+                <div> Khi bạn chọn tỷ giá ở bảng bên dưới, số tiền nhận về sẽ được quy đổi theo tỷ giá đã chọn</div>
+            </div>
             <div class="transfer-box">
                 <div class="currency-box">
                     <CurrencyInput v-model:currency="fromCurrency" v-model:value="fromValue" />
@@ -16,11 +21,12 @@
             <table class="comparison-table">
                 <thead>
                     <tr>
-                        <th style="width: 28%;">Ngân hàng</th>
-                        <th style="width: 18%;">Tỷ giá</th>
-                        <th style="width: 18%;">Phí chuyển nhượng</th>
-                        <th style="width: 18%;">Người nhận được</th>
-                        <th style="width: 18%;"></th>
+                        <th style="width: 20%;">Ngân hàng</th>
+                        <th style="width: 16%;">Tỷ giá</th>
+                        <th style="width: 16%;">Phí chuyển nhượng</th>
+                        <th style="width: 16%;">Người nhận được</th>
+                        <th style="width: 16%;">Cập nhật lần cuối</th>
+                        <th style="width: 16%;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,6 +47,9 @@
                         <td style="text-align: center;">{{ bank.fee }}</td>
                         <td style="text-align: center;">
                             {{ formatNumber(bank.received) }}
+                        </td>
+                        <td style="text-align: center;">
+                            {{ bank.updatedAt }}
                         </td>
                         <td style="text-align: right;">
                             <button v-if="selectedRow === index" class="transfer-btn" @click="transferAction()">Chuyển
@@ -290,7 +299,7 @@ watch(
 <style scoped>
 .fee-comparison {
     background: #ededed;
-    padding: 40px 5% 60px 5%;
+    padding: 128px 5%;
     font-family: Arial, sans-serif;
     position: relative;
 }
@@ -308,7 +317,7 @@ watch(
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 15px 0px;
+    padding: 24px 0px;
 }
 
 .currency-box {
@@ -322,7 +331,7 @@ watch(
     font-weight: 600;
     font-size: 64px;
     line-height: 64px;
-    padding: 30px 0px;
+    padding-bottom: 64px;
     color: #23262F;
 }
 
@@ -332,10 +341,12 @@ input[type="number"] {
 }
 
 .swap-button {
-    background: none;
-    font-size: 1.5rem;
+    background: rgba(244, 245, 246, 1);
     border: none;
     cursor: pointer;
+    border-radius: 999px;
+    padding: 16px 24px;
+    font-size: 24px;
 }
 
 .receive-amount {
@@ -367,7 +378,6 @@ input[type="number"] {
 
 .comparison-table thead tr th {
     color: #ffffff !important;
-    border: solid 0.5px #555555;
 }
 
 .comparison-table th,
@@ -632,6 +642,25 @@ textarea {
     border-radius: 1000px;
     background: #14AF23;
     animation: pulse 1.5s infinite ease-in-out;
+}
+
+.transfer-notification{
+    background-color: rgba(253, 246, 232, 1);
+    padding: 16px;
+    font-size: 16px;
+    display: flex;
+    line-height: 24px;
+    font-family: Inter, sans-serif;
+    border-radius: 8px;
+    border: solid 1px rgba(245, 215, 162, 1);
+}
+.transfer-notification strong {
+    margin-right: 8px;
+}
+.transfer-notification img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
 }
 
 @keyframes pulse {

@@ -98,20 +98,13 @@ function handleClickOutside(event) {
     showList.value = false;
   }
 }
-
-// onMounted(() => {
-//   document.addEventListener("click", handleClickOutside);
-// })
-
-// onBeforeUnmount(() => {
-//   document.removeEventListener("click", handleClickOutside);
-// })
 </script>
 
 <style scoped>
 .dropdown {
   width: 100%;
   position: relative;
+  font-family: Inter, sans-serif;
 }
 
 .dropdown-toggle {
@@ -127,6 +120,7 @@ function handleClickOutside(event) {
   width: 20px;
   height: 20px;
   margin-right: 8px;
+  border-radius: 24px;
 }
 
 .currency-selector {
@@ -223,5 +217,10 @@ function handleClickOutside(event) {
 .selected-check {
   margin-left: auto;
   color: green;
+}
+
+.dropdown-toggle:focus-within {
+  border-color: rgba(159, 232, 112, 1);
+  box-shadow: 0 0 0 2px rgba(159, 232, 112, 1);
 }
 </style>

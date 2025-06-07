@@ -8,7 +8,7 @@
             <International />
             <FeeComparison v-model:compareCurrency="currency" />
             <CustomerReview />
-            <DownloadNow />
+            <!-- <DownloadNow /> -->
             <Register />
         </div>
     </main>
@@ -20,7 +20,7 @@ import HalluForYou from "../components/HalluForYou.vue";
 import International from "../components/International.vue";
 import FeeComparison from "../components/FeeComparison.vue";
 import CustomerReview from "../components/CustomerReview.vue";
-import DownloadNow from "../components/DownloadNow.vue";
+//import DownloadNow from "../components/DownloadNow.vue";
 import Register from "../components/Register.vue";
 import { ref } from "vue";
 

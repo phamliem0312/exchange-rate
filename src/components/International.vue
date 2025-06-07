@@ -19,11 +19,11 @@
         <div class="icon-circle">
           <img src="@/assets/icons/transfer.svg" alt="icon" />
         </div>
-        <h2>Chuyển tiền quốc tế dễ dàng hơn</h2>
-        <p>
+        <div class="title">Chuyển tiền quốc tế dễ dàng hơn</div>
+        <div class="subtitle">
           Nhanh chóng và tiết kiệm với tỷ giá cạnh tranh, giúp bạn tối ưu chi phí và hoàn tất giao
           dịch chỉ trong vài phút.
-        </p>
+        </div>
         <div class="buttons">
           <button class="outline" @click="scrollToTarget">So sánh phí</button>
           <button class="filled" @click="transfer()">Chuyển tiền</button>
@@ -75,7 +75,7 @@ const transfer = () => {
 <style scoped>
 .international-transfer {
   background: white;
-  padding: 20px 0px;
+  padding: 80px 0px;
   font-family: sans-serif;
 }
 
@@ -85,6 +85,20 @@ const transfer = () => {
   width: 100%;
   display: flex;
   height: 180px;
+}
+
+.title{
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  font-size: 36px;
+}
+
+.subtitle {
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  padding: 4px;
 }
 
 .flags-container {
@@ -161,9 +175,9 @@ const transfer = () => {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-bottom: 20px;
   display: flex;
   align-items: center;
+  margin-bottom: 48px;
 }
 
 .right-side h2 {
@@ -180,6 +194,7 @@ const transfer = () => {
 .buttons {
   display: flex;
   gap: 12px;
+  margin-top: 32px;
 }
 
 button {

@@ -83,13 +83,12 @@ const reviews = [
 
 .label{
     font-weight: 600;
-    font-size: 64px;
-    line-height: 72px;
-    letter-spacing: -2%;
+    font-size: 58px;
+    line-height: 64px;
 }
 .review-main {
     display: flex;
-    gap: 2rem;
+    gap: 80px;
 }
 
 .left-section {
@@ -130,7 +129,7 @@ h2 {
     background: #f9f9f9;
     border-radius: 24px;
     padding: 16px 24px;
-    margin-top: 16px;
+    margin-top: 24px;
     border: 2px solid #e0e0e0;
 }
 

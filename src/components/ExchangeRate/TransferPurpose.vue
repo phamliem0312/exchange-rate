@@ -116,6 +116,11 @@ onBeforeUnmount(() => {
     height: 60px;
 }
 
+.dropdown-input:active{
+  border-color: rgba(159, 232, 112, 1);
+  box-shadow: 0 0 0 2px rgba(159, 232, 112, 1);
+}
+
 .dropdown-input {
     padding: 16px;
     border: 1px solid #ccc;
@@ -147,6 +152,7 @@ onBeforeUnmount(() => {
     border-bottom: 1px solid #eee;
     outline: none;
     font-size: 14px;
+    position: fixed;
 }
 
 .dropdown-item {
@@ -188,7 +194,7 @@ onBeforeUnmount(() => {
 }
 
 .selected {
-    background-color: #eefce3;
+    background-color: rgba(244, 245, 246, 1);
     font-weight: 600;
 }
 
@@ -206,6 +212,7 @@ onBeforeUnmount(() => {
     padding: 16px;
     font-family: Inter, sans-serif;
     background-color: #fff;
+    margin-top: 24px;
 }
 
 .fee-row {

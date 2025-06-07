@@ -41,6 +41,13 @@ function registerAction() {
   display: flex;
   align-items: center;
   padding: 6px 5%;
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  background: rgba(244, 245, 246, 1);
 }
 
 .logo {

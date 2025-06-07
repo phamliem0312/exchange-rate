@@ -50,12 +50,13 @@ const openAccount = () => {
 <style scoped>
 .exchange-rate-main {
   width: 100%;
+  background: rgba(244, 245, 246, 1);
 }
 
 .exchange-rate-body{
   display: flex;
   max-width: 1440px;
-  padding: 56px 5%;
+  padding: 84px 5% 128px 5%;
   margin: auto;
 }
 
@@ -63,6 +64,7 @@ const openAccount = () => {
   padding-right: 16px;
   align-items: center;
   align-content: center;
+  width: 50%;
 }
 
 .exchange-rate-title {
@@ -100,9 +102,10 @@ const openAccount = () => {
 }
 
 .exchange-rate-form {
-  width: 580px;
+  width: 50%;
   display: flex;
-  height: 680px;
+  height: auto;
+  padding-left: 10%;
 }
 
 .buttons-container {
