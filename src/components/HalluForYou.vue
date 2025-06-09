@@ -51,7 +51,7 @@
   <style scoped>
   .features-section {
     background: #f9fafb;
-    padding: 0px 5% 128px 5%;
+    padding: 0px 5% 110px 5%;
     text-align: center;
     background-color: rgba(244, 245, 246, 1);
   }

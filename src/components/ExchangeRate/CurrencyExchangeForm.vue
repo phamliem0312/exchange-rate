@@ -172,7 +172,7 @@ watch(
 
 .divider {
   position: relative;
-  margin: 12px 0px 6px 0px;
+  margin: 12px 0px 0px 0px;
 }
 
 .divider-image {

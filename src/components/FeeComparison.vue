@@ -299,7 +299,7 @@ watch(
 <style scoped>
 .fee-comparison {
     background: #ededed;
-    padding: 128px 5%;
+    padding: 110px 5%;
     font-family: Arial, sans-serif;
     position: relative;
 }
@@ -359,10 +359,21 @@ input[type="number"] {
     background: white;
     border-radius: 8px;
     overflow: hidden;
+    max-height: 400px;
+    display: block;
+}
+
+.comparison-table thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #163300;
 }
 
 .comparison-table thead tr {
-    background-color: #163300;
     font-family: Inter, sans-serif;
     font-weight: 600;
     font-size: 16px;
@@ -373,7 +384,16 @@ input[type="number"] {
 }
 
 .comparison-table tbody {
+    display: block;
     border: 1px solid #ddd;
+    overflow-y: auto;
+    max-height: 336px; /* 6 dòng x 56px height = 336px */
+    width: 100%;
+}
+.comparison-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
 .comparison-table thead tr th {

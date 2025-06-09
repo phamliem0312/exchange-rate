@@ -184,7 +184,7 @@ function handleClickOutside(event) {
   margin-top: 5px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-  z-index: 10;
+  z-index: 11;
   overflow-x: hidden;
 }
 

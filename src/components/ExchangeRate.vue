@@ -105,7 +105,7 @@ const openAccount = () => {
   width: 50%;
   display: flex;
   height: auto;
-  padding-left: 10%;
+  padding-left: 15%;
 }
 
 .buttons-container {

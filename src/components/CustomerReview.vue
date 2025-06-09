@@ -7,8 +7,7 @@
             <div class="right-section">
                 <div class="label">Khách hàng nói gì về chúng tôi</div>
 
-                <div v-for="(review, index) in reviews" :key="index" class="review-card"
-                    :class="{ featured: index === 0 }">
+                <div v-for="(review, index) in reviews" :key="index" class="review-card">
                     <div class="review-header">
                         <img :src="review.avatar" alt="Avatar" class="avatar" />
                         <div>
@@ -23,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <div class="store-rating">
+        <!-- <div class="store-rating">
             <div class="store">
                 <img :src="appStoreImage" alt="App Store" />
                 <div>
@@ -38,7 +37,7 @@
                     <div><strong>4.8/5</strong>, 58.6k lượt đánh giá</div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -133,12 +132,12 @@ h2 {
     border: 2px solid #e0e0e0;
 }
 
-.review-card.featured {
+.review-card:hover {
     background: linear-gradient(311.5deg, #2E5144 2.01%, #54A79D 155.8%);
     color: white;
 }
 
-.review-card.featured .review-text{
+.review-card:hover .review-text{
     color: #FFFFFF !important;
 }
 
