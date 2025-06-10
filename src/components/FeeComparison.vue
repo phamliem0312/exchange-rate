@@ -131,6 +131,11 @@ import uob from '@/assets/icons/uob.jpg';
 import gpbank from '@/assets/icons/gpbank.png';
 import abbank from '@/assets/icons/abbank.webp';
 import pgbank from '@/assets/icons/pgbank.png';
+import baovietbank from '@/assets/icons/baovietbank.png';
+import hongleongbank from '@/assets/icons/hongleongbank.png';
+import msb from '@/assets/icons/msb.webp';
+import namabank from '@/assets/icons/namabank.png';
+import sacombank from '@/assets/icons/sacombank.png';
 
 const logoMap = {
     'MBbank': mbbankLogo,
@@ -157,7 +162,12 @@ const logoMap = {
     'LPbank': lpbank,
     'GPbank': gpbank,
     'ABbank': abbank,
-    'PGbank': pgbank
+    'PGbank': pgbank,
+    'Baovietbank': baovietbank,
+    'HongLeongbank': hongleongbank,
+    'MSB': msb,
+    'NamAbank': namabank,
+    'Sacombank': sacombank
 };
 
 const props = defineProps({
